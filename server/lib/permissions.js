@@ -4,6 +4,16 @@ export const MODULES = [
   'inventory', 'users', 'reports', 'activity-logs',
 ]
 
+// All controllable page keys (excludes always-allowed 'profile' and super_admin-only 'companies')
+export const ALL_PAGE_KEYS = [
+  'dashboard', 'customers', 'quotations', 'invoices', 'credit-notes',
+  'recurring-invoices', 'suppliers', 'purchase-orders', 'products',
+  'inventory', 'reports', 'activity-log', 'users', 'custom-fields', 'smtp-settings',
+]
+
+// Pages always accessible regardless of permissions
+export const ALWAYS_ALLOWED_PAGES = ['dashboard', 'profile']
+
 export const ROLE_HIERARCHY = {
   user: 1,
   manager: 2,

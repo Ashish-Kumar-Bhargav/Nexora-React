@@ -4,60 +4,61 @@ import {
   LayoutDashboard, Package, Warehouse, Users, FileText, Receipt,
   UserCog, Building2, LogOut, ChevronRight, ChevronDown, Zap, RefreshCw,
   BarChart2, Settings, X, CheckCircle, Activity, User, FileCheck,
-  RepeatIcon, Truck, ShoppingCart, Mail, Menu, PanelLeftClose,
+  RepeatIcon, Truck, ShoppingCart, Mail, Menu, PanelLeftClose, Lock,
 } from 'lucide-react'
+import { usePermissions } from '../context/PermissionsContext.jsx'
 
 const navGroups = [
   {
     label: 'Main',
     items: [
-      { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: ['super_admin', 'admin', 'manager', 'user'] },
+      { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: ['super_admin', 'admin', 'manager', 'user'], pageKey: 'dashboard' },
     ],
   },
   {
     label: 'Sales',
     items: [
-      { href: '/customers', label: 'Customers', icon: Users, roles: ['super_admin', 'admin', 'manager', 'user'] },
-      { href: '/quotations', label: 'Quotations', icon: FileText, roles: ['super_admin', 'admin', 'manager', 'user'] },
-      { href: '/invoices', label: 'Invoices', icon: Receipt, roles: ['super_admin', 'admin', 'manager', 'user'] },
-      { href: '/credit-notes', label: 'Credit Notes', icon: FileCheck, roles: ['super_admin', 'admin', 'manager'] },
-      { href: '/recurring-invoices', label: 'Recurring', icon: RepeatIcon, roles: ['super_admin', 'admin', 'manager'] },
+      { href: '/customers', label: 'Customers', icon: Users, roles: ['super_admin', 'admin', 'manager', 'user'], pageKey: 'customers' },
+      { href: '/quotations', label: 'Quotations', icon: FileText, roles: ['super_admin', 'admin', 'manager', 'user'], pageKey: 'quotations' },
+      { href: '/invoices', label: 'Invoices', icon: Receipt, roles: ['super_admin', 'admin', 'manager', 'user'], pageKey: 'invoices' },
+      { href: '/credit-notes', label: 'Credit Notes', icon: FileCheck, roles: ['super_admin', 'admin', 'manager'], pageKey: 'credit-notes' },
+      { href: '/recurring-invoices', label: 'Recurring', icon: RepeatIcon, roles: ['super_admin', 'admin', 'manager'], pageKey: 'recurring-invoices' },
     ],
   },
   {
     label: 'Procurement',
     items: [
-      { href: '/suppliers', label: 'Suppliers', icon: Truck, roles: ['super_admin', 'admin', 'manager'] },
-      { href: '/purchase-orders', label: 'Purchase Orders', icon: ShoppingCart, roles: ['super_admin', 'admin', 'manager'] },
+      { href: '/suppliers', label: 'Suppliers', icon: Truck, roles: ['super_admin', 'admin', 'manager'], pageKey: 'suppliers' },
+      { href: '/purchase-orders', label: 'Purchase Orders', icon: ShoppingCart, roles: ['super_admin', 'admin', 'manager'], pageKey: 'purchase-orders' },
     ],
   },
   {
     label: 'Inventory',
     items: [
-      { href: '/products', label: 'Products', icon: Package, roles: ['super_admin', 'admin', 'manager', 'user'] },
-      { href: '/inventory', label: 'Inventory', icon: Warehouse, roles: ['super_admin', 'admin', 'manager', 'user'] },
+      { href: '/products', label: 'Products', icon: Package, roles: ['super_admin', 'admin', 'manager', 'user'], pageKey: 'products' },
+      { href: '/inventory', label: 'Inventory', icon: Warehouse, roles: ['super_admin', 'admin', 'manager', 'user'], pageKey: 'inventory' },
     ],
   },
   {
     label: 'Reports & Logs',
     items: [
-      { href: '/reports', label: 'Reports', icon: BarChart2, roles: ['super_admin', 'admin', 'manager'] },
-      { href: '/activity-log', label: 'Activity Log', icon: Activity, roles: ['super_admin', 'admin', 'manager'] },
+      { href: '/reports', label: 'Reports', icon: BarChart2, roles: ['super_admin', 'admin', 'manager'], pageKey: 'reports' },
+      { href: '/activity-log', label: 'Activity Log', icon: Activity, roles: ['super_admin', 'admin', 'manager'], pageKey: 'activity-log' },
     ],
   },
   {
     label: 'Administration',
     items: [
-      { href: '/users', label: 'Users', icon: UserCog, roles: ['super_admin', 'admin'] },
-      { href: '/companies', label: 'Companies', icon: Building2, roles: ['super_admin'] },
-      { href: '/settings/custom-fields', label: 'Custom Fields', icon: Settings, roles: ['super_admin', 'admin'] },
-      { href: '/settings/smtp', label: 'Email Settings', icon: Mail, roles: ['super_admin', 'admin'] },
+      { href: '/users', label: 'Users', icon: UserCog, roles: ['super_admin', 'admin'], pageKey: 'users' },
+      { href: '/companies', label: 'Companies', icon: Building2, roles: ['super_admin'], pageKey: null },
+      { href: '/settings/custom-fields', label: 'Custom Fields', icon: Settings, roles: ['super_admin', 'admin'], pageKey: 'custom-fields' },
+      { href: '/settings/smtp', label: 'Email Settings', icon: Mail, roles: ['super_admin', 'admin'], pageKey: 'smtp-settings' },
     ],
   },
   {
     label: 'Account',
     items: [
-      { href: '/profile', label: 'My Profile', icon: User, roles: ['super_admin', 'admin', 'manager', 'user'] },
+      { href: '/profile', label: 'My Profile', icon: User, roles: ['super_admin', 'admin', 'manager', 'user'], pageKey: 'profile' },
     ],
   },
 ]
@@ -65,6 +66,7 @@ const navGroups = [
 export default function Sidebar({ userRole, userName, userEmail: userEmailProp, userCompanyName }) {
   const location = useLocation()
   const navigate = useNavigate()
+  const { canAccess } = usePermissions()
   const [collapsed, setCollapsed] = useState(false)
   const [collapsedGroups, setCollapsedGroups] = useState(new Set())
   const [showSwitchModal, setShowSwitchModal] = useState(false)
@@ -204,24 +206,28 @@ export default function Sidebar({ userRole, userName, userEmail: userEmailProp, 
                     {visibleItems.map((item) => {
                       const Icon = item.icon
                       const isActive = location.pathname === item.href || location.pathname.startsWith(item.href + '/')
+                      const locked = !canAccess(item.pageKey)
                       return (
                         <Link
                           key={item.href}
                           to={item.href}
-                          title={collapsed ? item.label : undefined}
+                          title={collapsed ? (locked ? `${item.label} (Access Denied)` : item.label) : undefined}
                           className={`flex items-center gap-3 rounded-lg text-sm font-medium transition-all ${
                             collapsed ? 'px-0 py-2 justify-center' : 'px-3 py-2'
                           } ${
                             isActive
                               ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/30'
+                              : locked
+                              ? 'text-slate-600 hover:bg-slate-800/50 hover:text-slate-400'
                               : 'text-slate-400 hover:bg-slate-800 hover:text-white'
                           }`}
                         >
-                          <Icon size={16} className="flex-shrink-0" />
+                          <Icon size={16} className={`flex-shrink-0 ${locked && !isActive ? 'opacity-40' : ''}`} />
                           {!collapsed && (
                             <>
-                              <span className="flex-1 truncate">{item.label}</span>
-                              {isActive && <ChevronRight size={13} />}
+                              <span className={`flex-1 truncate ${locked ? 'opacity-40' : ''}`}>{item.label}</span>
+                              {locked && !isActive && <Lock size={11} className="text-slate-600 flex-shrink-0" />}
+                              {isActive && !locked && <ChevronRight size={13} />}
                             </>
                           )}
                         </Link>

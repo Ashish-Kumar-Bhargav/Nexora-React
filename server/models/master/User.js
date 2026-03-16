@@ -4,6 +4,8 @@ const userCompanySchema = new mongoose.Schema({
   companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company' },
   role: { type: String, enum: ['user', 'manager', 'admin', 'super_admin'], default: 'user' },
   permissions: { type: mongoose.Schema.Types.Mixed, default: {} },
+  // Empty array = inherit all company-allowed pages. Non-empty = only these pages (subset of company's allowedPages).
+  pagePermissions: { type: [String], default: [] },
   isActive: { type: Boolean, default: true },
 }, { _id: false })
 

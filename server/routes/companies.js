@@ -2,17 +2,17 @@ import { Router } from 'express'
 import { authenticate } from '../lib/auth.js'
 import { connectMasterDB } from '../lib/mongodb.js'
 import Company from '../models/master/Company.js'
-import { ROLE_HIERARCHY } from '../lib/permissions.js'
+import { ROLE_HIERARCHY, ALL_PAGE_KEYS } from '../lib/permissions.js'
 
 const router = Router()
 router.use(authenticate)
 
-// GET /api/companies/list — lightweight list for company assignment
+// GET /api/companies/list — lightweight list for company assignment (includes allowedPages)
 router.get('/list', async (req, res) => {
   try {
     if (ROLE_HIERARCHY[req.user.role] < ROLE_HIERARCHY['admin']) return res.status(403).json({ success: false, message: 'Admin access required' })
     await connectMasterDB()
-    const companies = await Company.find({ isActive: true }).sort({ name: 1 }).select('_id name code').lean()
+    const companies = await Company.find({ isActive: true }).sort({ name: 1 }).select('_id name code allowedPages').lean()
     return res.json({ success: true, data: { companies } })
   } catch (err) { return res.status(500).json({ success: false, message: err.message }) }
 })
@@ -100,6 +100,21 @@ router.put('/:id', async (req, res) => {
     const updated = await Company.findByIdAndUpdate(req.params.id, updates, { new: true })
     if (!updated) return res.status(404).json({ success: false, message: 'Company not found' })
     return res.json({ success: true, message: 'Company updated', data: { company: updated } })
+  } catch (err) { return res.status(500).json({ success: false, message: err.message }) }
+})
+
+// PUT /api/companies/:id/pages — set which pages this company is allowed to access (super_admin only)
+router.put('/:id/pages', async (req, res) => {
+  try {
+    if (req.user.role !== 'super_admin') return res.status(403).json({ success: false, message: 'Super admin access required' })
+    await connectMasterDB()
+    const { allowedPages } = req.body
+    if (!Array.isArray(allowedPages)) return res.status(400).json({ success: false, message: 'allowedPages must be an array' })
+    // Validate: only known page keys are accepted
+    const valid = allowedPages.filter((p) => ALL_PAGE_KEYS.includes(p))
+    const updated = await Company.findByIdAndUpdate(req.params.id, { allowedPages: valid }, { new: true })
+    if (!updated) return res.status(404).json({ success: false, message: 'Company not found' })
+    return res.json({ success: true, message: 'Page permissions updated', data: { company: updated } })
   } catch (err) { return res.status(500).json({ success: false, message: err.message }) }
 })
 

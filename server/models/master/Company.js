@@ -20,6 +20,8 @@ const companySchema = new mongoose.Schema(
     smtpPass: String,
     smtpFrom: String,
     smtpFromName: String,
+    // Empty array = all pages allowed (default). Non-empty = only these pages are accessible.
+    allowedPages: { type: [String], default: [] },
   },
   { timestamps: true }
 )

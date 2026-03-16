@@ -1,8 +1,9 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import {
   Plus, Search, Pencil, Trash2, Building2, X, ChevronLeft, ChevronRight,
-  Upload, Eye, EyeOff, CheckCircle, XCircle,
+  Upload, Eye, EyeOff, CheckCircle, XCircle, ShieldCheck,
 } from 'lucide-react'
+import { PAGE_GROUPS, ALL_PAGE_KEYS } from '../lib/pages.js'
 
 const emptyForm = {
   name: '', code: '', address: '', phone: '', email: '',
@@ -81,6 +82,12 @@ export default function CompaniesPage() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
 
+  // Page permissions modal state
+  const [pagesModal, setPagesModal] = useState({ open: false, company: null })
+  const [selectedPages, setSelectedPages] = useState([])
+  const [savingPages, setSavingPages] = useState(false)
+  const [pagesError, setPagesError] = useState('')
+
   function getToken() { return localStorage.getItem('token') || '' }
 
   const fetchCompanies = useCallback(async (q = search, p = page, sf = statusFilter) => {
@@ -151,6 +158,45 @@ export default function CompaniesPage() {
     const json = await res.json()
     if (json.success) fetchCompanies(search, page, statusFilter)
     else alert(json.message)
+  }
+
+  function openPagesModal(c) {
+    setPagesModal({ open: true, company: c })
+    // If company has no allowedPages (or empty), treat as "all pages" selected
+    setSelectedPages(c.allowedPages?.length > 0 ? [...c.allowedPages] : [...ALL_PAGE_KEYS])
+    setPagesError('')
+  }
+
+  function togglePage(key) {
+    setSelectedPages((prev) =>
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+    )
+  }
+
+  async function savePages() {
+    if (!pagesModal.company) return
+    setSavingPages(true)
+    setPagesError('')
+    try {
+      // If all pages selected, save empty array (means "all allowed")
+      const toSave = selectedPages.length === ALL_PAGE_KEYS.length ? [] : selectedPages
+      const res = await fetch(`/api/companies/${pagesModal.company._id}/pages`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${getToken()}` },
+        body: JSON.stringify({ allowedPages: toSave }),
+      })
+      const json = await res.json()
+      if (json.success) {
+        setPagesModal({ open: false, company: null })
+        fetchCompanies(search, page, statusFilter)
+      } else {
+        setPagesError(json.message || 'Failed to save.')
+      }
+    } catch {
+      setPagesError('Network error. Please try again.')
+    } finally {
+      setSavingPages(false)
+    }
   }
 
   async function toggleActive(c) {
@@ -301,6 +347,13 @@ export default function CompaniesPage() {
                             <Pencil className="w-3.5 h-3.5" />
                           </button>
                           <button
+                            onClick={() => openPagesModal(c)}
+                            className="p-1.5 text-indigo-500 hover:bg-indigo-50 rounded-lg transition-colors"
+                            title="Manage page access"
+                          >
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                          </button>
+                          <button
                             onClick={() => handleDelete(c._id, c.name)}
                             className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                             title="Delete"
@@ -342,6 +395,111 @@ export default function CompaniesPage() {
           </>
         )}
       </div>
+
+      {/* Page Permissions Modal */}
+      {pagesModal.open && pagesModal.company && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+              <div>
+                <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-indigo-500" />
+                  Page Access — {pagesModal.company.name}
+                </h3>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  Control which pages this company's users can access
+                </p>
+              </div>
+              <button onClick={() => setPagesModal({ open: false, company: null })} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="p-6 max-h-[60vh] overflow-y-auto scrollbar-hide space-y-5">
+              {pagesError && (
+                <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-2 text-sm">{pagesError}</div>
+              )}
+
+              {/* Select All / Deselect All */}
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-gray-500 font-medium">
+                  {selectedPages.length} of {ALL_PAGE_KEYS.length} pages selected
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPages([...ALL_PAGE_KEYS])}
+                    className="text-xs text-blue-600 hover:underline font-medium"
+                  >
+                    Select all
+                  </button>
+                  <span className="text-gray-300">|</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPages(['dashboard'])}
+                    className="text-xs text-gray-500 hover:underline"
+                  >
+                    Clear all
+                  </button>
+                </div>
+              </div>
+
+              {/* Page groups */}
+              {PAGE_GROUPS.map((group) => (
+                <div key={group.label}>
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">{group.label}</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {group.pages.map((pg) => {
+                      const checked = selectedPages.includes(pg.key)
+                      const always = pg.alwaysAllowed
+                      return (
+                        <label
+                          key={pg.key}
+                          className={`flex items-center gap-2.5 px-3 py-2 rounded-lg border cursor-pointer transition-colors ${
+                            always
+                              ? 'border-gray-100 bg-gray-50 cursor-default opacity-60'
+                              : checked
+                              ? 'border-indigo-200 bg-indigo-50'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={always ? true : checked}
+                            disabled={always}
+                            onChange={() => !always && togglePage(pg.key)}
+                            className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          />
+                          <span className={`text-sm font-medium ${checked || always ? 'text-gray-800' : 'text-gray-500'}`}>
+                            {pg.label}
+                          </span>
+                          {always && <span className="text-xs text-gray-400 ml-auto">(always)</span>}
+                        </label>
+                      )
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="px-6 py-4 border-t border-gray-100 flex gap-3">
+              <button
+                onClick={savePages}
+                disabled={savingPages}
+                className="flex-1 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white text-sm font-medium py-2.5 rounded-xl transition"
+              >
+                {savingPages ? 'Saving...' : 'Save Page Access'}
+              </button>
+              <button
+                onClick={() => setPagesModal({ open: false, company: null })}
+                className="flex-1 border border-gray-200 text-gray-600 hover:bg-gray-50 text-sm font-medium py-2.5 rounded-xl transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Create / Edit Modal */}
       {showForm && (

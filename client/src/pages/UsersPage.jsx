@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Plus, Pencil, Trash2, Search, ShieldOff, Building2, X, Check } from 'lucide-react'
+import { Plus, Pencil, Trash2, Search, ShieldOff, Building2, X, Check, Shield } from 'lucide-react'
 import DataTable from '../components/DataTable'
 import { useNavigate } from 'react-router-dom'
+import { PAGE_GROUPS, ALL_PAGE_KEYS } from '../lib/pages.js'
 
 const emptyForm = {
   name: '',
@@ -43,6 +44,8 @@ export default function UsersPage() {
   const [savingAssign, setSavingAssign] = useState(false)
   const [assignError, setAssignError] = useState('')
   const [assignSuccess, setAssignSuccess] = useState('')
+  // Tracks which assignment rows have the page permissions panel expanded
+  const [expandedPages, setExpandedPages] = useState(new Set())
 
   useEffect(() => {
     const userStr = localStorage.getItem('user')
@@ -75,7 +78,7 @@ export default function UsersPage() {
 
   async function fetchAllCompanies() {
     try {
-      const res = await fetch('/api/companies/list', {
+      const res = await fetch('/api/companies/list?includePages=true', {
         headers: { Authorization: `Bearer ${getToken()}` },
       })
       const json = await res.json()
@@ -91,11 +94,12 @@ export default function UsersPage() {
 
   function openAssignModal(user) {
     setAssignModal({ open: true, user })
-    setAssignments(user.companies.map((c) => ({ ...c })))
+    setAssignments(user.companies.map((c) => ({ ...c, pagePermissions: c.pagePermissions || [] })))
     setNewCompanyId('')
     setNewRole('user')
     setAssignError('')
     setAssignSuccess('')
+    setExpandedPages(new Set())
   }
 
   function closeAssignModal() {
@@ -103,6 +107,39 @@ export default function UsersPage() {
     setAssignments([])
     setAssignError('')
     setAssignSuccess('')
+    setExpandedPages(new Set())
+  }
+
+  function togglePagesExpanded(companyId) {
+    setExpandedPages((prev) => {
+      const next = new Set(prev)
+      if (next.has(companyId)) next.delete(companyId)
+      else next.add(companyId)
+      return next
+    })
+  }
+
+  function toggleUserPage(companyId, pageKey) {
+    setAssignments((prev) => prev.map((a) => {
+      if (a.companyId !== companyId) return a
+      const current = a.pagePermissions || []
+      const updated = current.includes(pageKey)
+        ? current.filter((k) => k !== pageKey)
+        : [...current, pageKey]
+      return { ...a, pagePermissions: updated }
+    }))
+  }
+
+  function setAllUserPages(companyId, grantAll) {
+    setAssignments((prev) => prev.map((a) =>
+      a.companyId !== companyId ? a : { ...a, pagePermissions: grantAll ? [] : ['dashboard'] }
+    ))
+  }
+
+  // Get the company's allowed pages (from allCompanies data)
+  function getCompanyAllowedPages(companyId) {
+    const c = allCompanies.find((c) => c._id === companyId)
+    return c?.allowedPages?.length > 0 ? c.allowedPages : ALL_PAGE_KEYS
   }
 
   function addAssignment() {
@@ -419,47 +456,146 @@ export default function UsersPage() {
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    {assignments.map((a) => (
-                      <div
-                        key={a.companyId}
-                        className={`flex items-center gap-3 px-4 py-3 rounded-xl border ${a.isActive ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50'}`}
-                      >
-                        <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <Building2 className="w-4 h-4 text-blue-600" />
+                    {assignments.map((a) => {
+                      const isPagesExpanded = expandedPages.has(a.companyId)
+                      const companyPages = getCompanyAllowedPages(a.companyId)
+                      const userPages = a.pagePermissions || []
+                      const hasCustomPages = userPages.length > 0
+                      return (
+                        <div
+                          key={a.companyId}
+                          className={`rounded-xl border ${a.isActive ? 'border-gray-200 bg-white' : 'border-gray-100 bg-gray-50'}`}
+                        >
+                          {/* Assignment row */}
+                          <div className="flex items-center gap-3 px-4 py-3">
+                            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                              <Building2 className="w-4 h-4 text-blue-600" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className={`text-sm font-medium truncate ${a.isActive ? 'text-gray-800' : 'text-gray-400'}`}>
+                                {companyName(a.companyId)}
+                              </p>
+                              {hasCustomPages && (
+                                <p className="text-xs text-indigo-500">{userPages.length} page{userPages.length !== 1 ? 's' : ''} selected</p>
+                              )}
+                            </div>
+                            {/* Role selector */}
+                            <select
+                              value={a.role}
+                              onChange={(e) => updateAssignmentRole(a.companyId, e.target.value)}
+                              className="border border-gray-200 rounded-lg px-2 py-1 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+                            >
+                              <option value="user">User</option>
+                              <option value="manager">Manager</option>
+                              <option value="admin">Admin</option>
+                            </select>
+                            {/* Active toggle */}
+                            <button
+                              onClick={() => toggleAssignmentActive(a.companyId)}
+                              title={a.isActive ? 'Disable access' : 'Enable access'}
+                              className={`px-2 py-1 rounded-lg text-xs font-medium transition ${a.isActive ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
+                            >
+                              {a.isActive ? 'Active' : 'Paused'}
+                            </button>
+                            {/* Pages toggle */}
+                            <button
+                              onClick={() => togglePagesExpanded(a.companyId)}
+                              title="Manage page permissions"
+                              className={`p-1.5 rounded-lg text-xs transition flex-shrink-0 ${isPagesExpanded ? 'bg-indigo-100 text-indigo-600' : 'text-gray-400 hover:bg-gray-100 hover:text-indigo-500'}`}
+                            >
+                              <Shield className="w-3.5 h-3.5" />
+                            </button>
+                            {/* Remove */}
+                            <button
+                              onClick={() => removeAssignment(a.companyId)}
+                              className="p-1 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition flex-shrink-0"
+                              title="Remove assignment"
+                            >
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+
+                          {/* Page permissions panel */}
+                          {isPagesExpanded && (
+                            <div className="px-4 pb-4 border-t border-gray-100 pt-3">
+                              <div className="flex items-center justify-between mb-3">
+                                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Page Access</p>
+                                <div className="flex gap-2">
+                                  <button
+                                    type="button"
+                                    onClick={() => setAllUserPages(a.companyId, true)}
+                                    className="text-xs text-blue-600 hover:underline font-medium"
+                                  >
+                                    All pages
+                                  </button>
+                                  <span className="text-gray-300">|</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => setAllUserPages(a.companyId, false)}
+                                    className="text-xs text-gray-400 hover:underline"
+                                  >
+                                    Clear
+                                  </button>
+                                </div>
+                              </div>
+                              <p className="text-xs text-gray-400 mb-3">
+                                {hasCustomPages
+                                  ? `Custom: ${userPages.length} page${userPages.length !== 1 ? 's' : ''} selected`
+                                  : 'Inherits all company-allowed pages'}
+                              </p>
+                              <div className="space-y-3">
+                                {PAGE_GROUPS.map((group) => {
+                                  const groupPages = group.pages.filter((p) => companyPages.includes(p.key) || p.alwaysAllowed)
+                                  if (groupPages.length === 0) return null
+                                  return (
+                                    <div key={group.label}>
+                                      <p className="text-xs text-gray-400 font-medium mb-1.5">{group.label}</p>
+                                      <div className="flex flex-wrap gap-2">
+                                        {groupPages.map((pg) => {
+                                          const isChecked = pg.alwaysAllowed || (!hasCustomPages) || userPages.includes(pg.key)
+                                          return (
+                                            <label
+                                              key={pg.key}
+                                              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs cursor-pointer transition ${
+                                                pg.alwaysAllowed
+                                                  ? 'border-gray-100 bg-gray-50 opacity-50 cursor-default'
+                                                  : isChecked
+                                                  ? 'border-indigo-200 bg-indigo-50 text-indigo-700'
+                                                  : 'border-gray-200 text-gray-500 hover:border-gray-300'
+                                              }`}
+                                            >
+                                              <input
+                                                type="checkbox"
+                                                checked={pg.alwaysAllowed ? true : isChecked}
+                                                disabled={pg.alwaysAllowed}
+                                                onChange={() => {
+                                                  if (pg.alwaysAllowed) return
+                                                  // On first manual change, init userPages from companyPages
+                                                  if (!hasCustomPages) {
+                                                    const initPages = companyPages.filter((k) => k !== pg.key)
+                                                    setAssignments((prev) => prev.map((aa) =>
+                                                      aa.companyId !== a.companyId ? aa : { ...aa, pagePermissions: initPages }
+                                                    ))
+                                                  } else {
+                                                    toggleUserPage(a.companyId, pg.key)
+                                                  }
+                                                }}
+                                                className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 w-3 h-3"
+                                              />
+                                              {pg.label}
+                                            </label>
+                                          )
+                                        })}
+                                      </div>
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            </div>
+                          )}
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <p className={`text-sm font-medium truncate ${a.isActive ? 'text-gray-800' : 'text-gray-400'}`}>
-                            {companyName(a.companyId)}
-                          </p>
-                        </div>
-                        {/* Role selector */}
-                        <select
-                          value={a.role}
-                          onChange={(e) => updateAssignmentRole(a.companyId, e.target.value)}
-                          className="border border-gray-200 rounded-lg px-2 py-1 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-                        >
-                          <option value="user">User</option>
-                          <option value="manager">Manager</option>
-                          <option value="admin">Admin</option>
-                        </select>
-                        {/* Active toggle */}
-                        <button
-                          onClick={() => toggleAssignmentActive(a.companyId)}
-                          title={a.isActive ? 'Disable access' : 'Enable access'}
-                          className={`px-2 py-1 rounded-lg text-xs font-medium transition ${a.isActive ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
-                        >
-                          {a.isActive ? 'Active' : 'Paused'}
-                        </button>
-                        {/* Remove */}
-                        <button
-                          onClick={() => removeAssignment(a.companyId)}
-                          className="p-1 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition flex-shrink-0"
-                          title="Remove assignment"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 )}
               </div>

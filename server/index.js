@@ -23,6 +23,7 @@ import emailsRoutes from './routes/emails.js'
 import customFieldsRoutes from './routes/customFields.js'
 import activityLogsRoutes from './routes/activityLogs.js'
 import seedRoutes from './routes/seed.js'
+import permissionsRoutes from './routes/permissions.js'
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -54,6 +55,7 @@ app.use('/api/emails', emailsRoutes)
 app.use('/api/custom-fields', customFieldsRoutes)
 app.use('/api/activity-logs', activityLogsRoutes)
 app.use('/api/seed', seedRoutes)
+app.use('/api/permissions', permissionsRoutes)
 
 app.get('/api/health', (req, res) => res.json({ success: true, message: 'Nexora API running' }))
 

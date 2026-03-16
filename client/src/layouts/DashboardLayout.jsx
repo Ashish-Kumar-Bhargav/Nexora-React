@@ -3,6 +3,7 @@ import { useNavigate, Outlet } from 'react-router-dom'
 import Sidebar from '../components/Sidebar.jsx'
 import Header from '../components/Header.jsx'
 import NavigationProgress from '../components/NavigationProgress.jsx'
+import { PermissionsProvider } from '../context/PermissionsContext.jsx'
 
 function readUserFromStorage() {
   try {
@@ -36,7 +37,7 @@ export default function DashboardLayout() {
   }
 
   return (
-    <>
+    <PermissionsProvider>
       <NavigationProgress />
       <div className="flex h-screen bg-gray-50 dark:bg-slate-900 overflow-hidden">
         <Sidebar userRole={user.role} userName={user.name} userEmail={user.email} userCompanyName={user.companyName} />
@@ -47,6 +48,6 @@ export default function DashboardLayout() {
           </main>
         </div>
       </div>
-    </>
+    </PermissionsProvider>
   )
 }
