@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate, Link } from 'react-router-dom'
-import { Lock, ArrowLeft, Zap, Eye, EyeOff } from 'lucide-react'
+import { Lock, ArrowLeft, Eye, EyeOff } from 'lucide-react'
+import BrandIcon from '../components/BrandIcon.jsx'
 
 export default function ResetPasswordPage() {
   const [searchParams] = useSearchParams()
@@ -46,9 +47,11 @@ export default function ResetPasswordPage() {
         <div className="flex justify-center mb-8">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-              <Zap className="w-5 h-5 text-white" />
+              <BrandIcon size={20} />
             </div>
-            <span className="text-2xl font-bold text-white tracking-tight">Nexora</span>
+            <span className="text-2xl font-extrabold tracking-tight">
+              <span className="text-white">Smart</span><span className="text-blue-400">Billing</span>
+            </span>
           </div>
         </div>
 

@@ -221,7 +221,7 @@ export default function CompaniesPage() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Companies</h1>
           <p className="text-sm text-gray-400 mt-0.5">{total} total companies</p>
@@ -448,7 +448,7 @@ export default function CompaniesPage() {
               {PAGE_GROUPS.map((group) => (
                 <div key={group.label}>
                   <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">{group.label}</p>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {group.pages.map((pg) => {
                       const checked = selectedPages.includes(pg.key)
                       const always = pg.alwaysAllowed

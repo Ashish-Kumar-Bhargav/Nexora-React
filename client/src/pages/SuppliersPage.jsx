@@ -68,7 +68,7 @@ export default function SuppliersPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Suppliers</h1>
           <p className="text-sm text-gray-500 mt-0.5">Manage your vendors and suppliers</p>

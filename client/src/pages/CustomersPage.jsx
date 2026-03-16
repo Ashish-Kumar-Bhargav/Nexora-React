@@ -105,7 +105,7 @@ export default function CustomersPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Customers</h1>
           <p className="text-gray-500 text-sm mt-0.5">{customers.length} total customers</p>
@@ -142,7 +142,7 @@ export default function CustomersPage() {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between p-5 border-b border-gray-100">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -152,7 +152,7 @@ export default function CustomersPage() {
               </div>
               <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-1"><X size={18} /></button>
             </div>
-            <div className="p-5 grid grid-cols-2 gap-4">
+            <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {error && <div className="col-span-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-3 py-2 text-sm">{error}</div>}
               {fields.map(({ key, label, placeholder }) => (
                 <div key={key} className={key === 'address' ? 'col-span-2' : ''}>

@@ -4,7 +4,6 @@ import DashboardLayout from './layouts/DashboardLayout.jsx'
 import AccessDenied from './components/AccessDenied.jsx'
 import { usePermissions } from './context/PermissionsContext.jsx'
 
-import LandingPage from './pages/LandingPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx'
@@ -27,7 +26,6 @@ import ActivityLogPage from './pages/ActivityLogPage.jsx'
 import ProfilePage from './pages/ProfilePage.jsx'
 import CustomFieldsPage from './pages/CustomFieldsPage.jsx'
 import SmtpPage from './pages/SmtpPage.jsx'
-import UpgradePlanPage from './pages/UpgradePlanPage.jsx'
 
 // Wraps a page and shows AccessDenied if the user lacks permission for that pageKey
 function PermissionGate({ pageKey, children }) {
@@ -71,12 +69,11 @@ export default function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/settings/custom-fields" element={<PermissionGate pageKey="custom-fields"><CustomFieldsPage /></PermissionGate>} />
             <Route path="/settings/smtp" element={<PermissionGate pageKey="smtp-settings"><SmtpPage /></PermissionGate>} />
-            <Route path="/settings/plan" element={<UpgradePlanPage />} />
           </Route>
 
-          {/* Landing page for unauthenticated users */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* Redirect root to login */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>

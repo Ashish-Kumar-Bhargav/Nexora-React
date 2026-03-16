@@ -24,7 +24,6 @@ import customFieldsRoutes from './routes/customFields.js'
 import activityLogsRoutes from './routes/activityLogs.js'
 import seedRoutes from './routes/seed.js'
 import permissionsRoutes from './routes/permissions.js'
-import subscriptionsRoutes from './routes/subscriptions.js'
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -57,10 +56,9 @@ app.use('/api/custom-fields', customFieldsRoutes)
 app.use('/api/activity-logs', activityLogsRoutes)
 app.use('/api/seed', seedRoutes)
 app.use('/api/permissions', permissionsRoutes)
-app.use('/api/subscriptions', subscriptionsRoutes)
 
-app.get('/api/health', (req, res) => res.json({ success: true, message: 'SmartBilling API running' }))
+app.get('/api/health', (req, res) => res.json({ success: true, message: 'Nexora API running' }))
 
 app.listen(PORT, () => {
-  console.log(`SmartBilling server running on http://localhost:${PORT}`)
+  console.log(`Nexora server running on http://localhost:${PORT}`)
 })

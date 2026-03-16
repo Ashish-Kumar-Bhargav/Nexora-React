@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Eye, EyeOff, Zap, Building2, ChevronRight, CheckCircle } from 'lucide-react'
+import { Eye, EyeOff, Building2, ChevronRight, CheckCircle } from 'lucide-react'
+import BrandIcon from '../components/BrandIcon.jsx'
 
 const Spinner = () => (
   <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
@@ -82,9 +83,11 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4 shadow-lg shadow-blue-500/30">
-            <Zap className="w-8 h-8 text-white" />
+            <BrandIcon size={32} />
           </div>
-          <h1 className="text-3xl font-bold text-white tracking-wide">NEXORA</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight">
+            <span className="text-white">Smart</span><span className="text-blue-400">Billing</span>
+          </h1>
           <p className="text-blue-300 mt-1 text-sm">Multi-Company ERP System</p>
         </div>
 
@@ -182,7 +185,7 @@ export default function LoginPage() {
 
         <div className="mt-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 flex items-center justify-between">
           <div>
-            <p className="text-white text-sm font-medium">New to Nexora?</p>
+            <p className="text-white text-sm font-medium">New to SmartBilling?</p>
             <p className="text-blue-300 text-xs mt-0.5">Register your company and get started</p>
           </div>
           <Link to="/register"
@@ -193,7 +196,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-blue-300 text-xs mt-5">
-          &copy; {new Date().getFullYear()} Nexora ERP. All rights reserved.
+          &copy; {new Date().getFullYear()} SmartBilling. All rights reserved.
         </p>
       </div>
     </div>

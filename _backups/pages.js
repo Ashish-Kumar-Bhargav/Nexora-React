@@ -73,28 +73,4 @@ export const PATH_TO_KEY = {
   '/settings/custom-fields': 'custom-fields',
   '/settings/smtp': 'smtp-settings',
   '/profile': 'profile',
-  '/settings/plan': null,
-}
-
-// Subscription plan page assignments (mirrors server/lib/permissions.js PLAN_PAGES)
-export const PLAN_PAGES = {
-  free: ['dashboard', 'customers', 'invoices', 'products'],
-  starter: ['dashboard', 'customers', 'invoices', 'quotations', 'products', 'inventory'],
-  pro: [
-    'dashboard', 'customers', 'invoices', 'quotations', 'credit-notes',
-    'recurring-invoices', 'suppliers', 'purchase-orders', 'products',
-    'inventory', 'reports', 'custom-fields',
-  ],
-  max: [
-    'dashboard', 'customers', 'invoices', 'quotations', 'credit-notes',
-    'recurring-invoices', 'suppliers', 'purchase-orders', 'products',
-    'inventory', 'reports', 'activity-log', 'users', 'custom-fields', 'smtp-settings',
-  ],
-}
-
-export const PLAN_DETAILS = {
-  free:    { name: 'Free',    price: 0,    color: 'gray',   description: 'Perfect for freelancers & startups' },
-  starter: { name: 'Starter', price: 999,  color: 'blue',   description: 'For small businesses growing fast' },
-  pro:     { name: 'Pro',     price: 2499, color: 'indigo', description: 'For businesses ready to scale' },
-  max:     { name: 'Max',     price: 4999, color: 'purple', description: 'Full power for enterprises' },
 }

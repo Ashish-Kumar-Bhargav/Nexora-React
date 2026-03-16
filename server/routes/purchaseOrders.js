@@ -174,7 +174,7 @@ router.post('/:id/email', async (req, res) => {
     const emailSubject = subject || `Purchase Order ${po.poNumber} from ${req.user.companyName}`
     const htmlBody = buildEmailTemplate({
       title: 'PURCHASE ORDER', documentNumber: po.poNumber, customerName: po.supplierName,
-      companyName: req.user.companyName || 'Nexora ERP', message,
+      companyName: req.user.companyName || 'SmartBilling', message,
       details: [
         { label: 'PO Number', value: po.poNumber },
         { label: 'Supplier', value: po.supplierName },

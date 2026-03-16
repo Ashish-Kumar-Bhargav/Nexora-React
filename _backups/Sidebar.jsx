@@ -2,12 +2,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import {
   LayoutDashboard, Package, Warehouse, Users, FileText, Receipt,
-  UserCog, Building2, LogOut, ChevronRight, ChevronDown, RefreshCw,
+  UserCog, Building2, LogOut, ChevronRight, ChevronDown, Zap, RefreshCw,
   BarChart2, Settings, X, CheckCircle, Activity, User, FileCheck,
-  RepeatIcon, Truck, ShoppingCart, Mail, PanelLeftClose, Lock,
-  CreditCard, Menu,
+  RepeatIcon, Truck, ShoppingCart, Mail, Menu, PanelLeftClose, Lock,
 } from 'lucide-react'
-import BrandIcon from './BrandIcon.jsx'
 import { usePermissions } from '../context/PermissionsContext.jsx'
 
 const navGroups = [
@@ -55,7 +53,6 @@ const navGroups = [
       { href: '/companies', label: 'Companies', icon: Building2, roles: ['super_admin'], pageKey: null },
       { href: '/settings/custom-fields', label: 'Custom Fields', icon: Settings, roles: ['super_admin', 'admin'], pageKey: 'custom-fields' },
       { href: '/settings/smtp', label: 'Email Settings', icon: Mail, roles: ['super_admin', 'admin'], pageKey: 'smtp-settings' },
-      { href: '/settings/plan', label: 'Subscription', icon: CreditCard, roles: ['admin'], pageKey: null },
     ],
   },
   {
@@ -66,7 +63,7 @@ const navGroups = [
   },
 ]
 
-export default function Sidebar({ userRole, userName, userEmail: userEmailProp, userCompanyName, mobileOpen, onClose }) {
+export default function Sidebar({ userRole, userName, userEmail: userEmailProp, userCompanyName }) {
   const location = useLocation()
   const navigate = useNavigate()
   const { canAccess } = usePermissions()
@@ -98,11 +95,6 @@ export default function Sidebar({ userRole, userName, userEmail: userEmailProp, 
     } catch { /* ignore */ }
   }, [])
 
-  // Close mobile sidebar on route change
-  useEffect(() => {
-    if (onClose) onClose()
-  }, [location.pathname]) // eslint-disable-line react-hooks/exhaustive-deps
-
   function toggleSidebar() {
     const next = !collapsed
     setCollapsed(next)
@@ -127,7 +119,7 @@ export default function Sidebar({ userRole, userName, userEmail: userEmailProp, 
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     localStorage.removeItem('companies')
-    navigate('/', { replace: true })
+    navigate('/login', { replace: true })
   }
 
   const handleSwitchCompany = async (targetCompanyId) => {
@@ -163,133 +155,79 @@ export default function Sidebar({ userRole, userName, userEmail: userEmailProp, 
     ? displayName.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
     : 'U'
 
-  // On mobile: always full-width (w-72), slide in/out
-  // On desktop: static, collapsible (w-16 or w-64)
-  const sidebarWidth = collapsed ? 'lg:w-16' : 'lg:w-64'
-
   return (
     <>
-      {/* Mobile backdrop */}
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
-
-      <aside
-        className={`
-          fixed lg:static inset-y-0 left-0 z-50 w-72 ${sidebarWidth}
-          ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
-          lg:translate-x-0
-          min-h-screen flex flex-col flex-shrink-0
-          transition-all duration-300 ease-in-out
-          bg-gradient-to-b from-slate-900 to-[#0a1628]
-          border-r border-slate-800/60
-          shadow-2xl lg:shadow-none
-        `}
-      >
-        {/* ── Brand header ── */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-700/50 flex-shrink-0">
+      <aside className={`${collapsed ? 'w-16' : 'w-64'} min-h-screen bg-[#0f172a] flex flex-col flex-shrink-0 transition-all duration-300 ease-in-out relative`}>
+        <div className="h-16 flex items-center justify-between px-3 border-b border-slate-700 flex-shrink-0">
           {!collapsed && (
-            <div className="flex items-center gap-3 overflow-hidden">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-900/50">
-                <BrandIcon size={16} />
+            <div className="flex items-center gap-2.5 overflow-hidden">
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Zap size={16} className="text-white" />
               </div>
-              <span className="whitespace-nowrap text-[15px] font-extrabold tracking-tight leading-none">
-                <span className="text-white">Smart</span><span className="text-blue-400">Billing</span>
-              </span>
+              <span className="text-white font-bold text-xl tracking-widest whitespace-nowrap">NEXORA</span>
             </div>
           )}
           {collapsed && (
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mx-auto shadow-lg shadow-blue-900/50">
-              <BrandIcon size={16} />
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mx-auto">
+              <Zap size={16} className="text-white" />
             </div>
           )}
-
-          {/* Close button — mobile only */}
-          <button
-            onClick={onClose}
-            className="lg:hidden p-1.5 text-slate-400 hover:text-white hover:bg-slate-700/60 rounded-lg transition"
-          >
-            <X size={18} />
-          </button>
-
-          {/* Collapse toggle — desktop only */}
           <button
             onClick={toggleSidebar}
-            className={`hidden lg:flex p-1.5 rounded-lg text-slate-500 hover:text-white hover:bg-slate-700/60 transition flex-shrink-0 ${
-              collapsed ? 'absolute -right-3 top-5 bg-slate-800 border border-slate-700 rounded-full z-10 p-1 shadow-lg' : ''
-            }`}
+            className={`text-slate-400 hover:text-white hover:bg-slate-800 p-1.5 rounded-lg transition flex-shrink-0 ${collapsed ? 'absolute -right-3 top-5 bg-slate-700 border border-slate-600 rounded-full z-10 p-1' : ''}`}
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed ? <Menu size={14} /> : <PanelLeftClose size={17} />}
           </button>
         </div>
 
-        {/* ── Nav ── */}
-        <nav className="flex-1 overflow-y-auto scrollbar-hide py-4 px-2 space-y-1">
+        <nav className="flex-1 overflow-y-auto scrollbar-hide py-3 px-2">
           {navGroups.map((group) => {
             const visibleItems = group.items.filter((item) => item.roles.includes(userRole))
             if (visibleItems.length === 0) return null
             const isGroupCollapsed = collapsedGroups.has(group.label)
 
             return (
-              <div key={group.label} className="mb-3">
+              <div key={group.label} className="mb-2">
                 {!collapsed && (
                   <button
                     onClick={() => toggleGroup(group.label)}
                     className="w-full flex items-center justify-between px-2 mb-1 group"
                   >
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600 group-hover:text-slate-500 transition">
+                    <span className="text-slate-500 text-xs font-semibold uppercase tracking-wider group-hover:text-slate-400 transition">
                       {group.label}
                     </span>
-                    <ChevronDown
-                      size={11}
-                      className={`text-slate-700 transition-transform duration-200 ${isGroupCollapsed ? '-rotate-90' : ''}`}
-                    />
+                    <ChevronDown size={12} className={`text-slate-600 transition-transform ${isGroupCollapsed ? '-rotate-90' : ''}`} />
                   </button>
-                )}
-
-                {collapsed && group.label !== navGroups[0].label && (
-                  <div className="mx-3 my-2 h-px bg-slate-800/80" />
                 )}
 
                 {(!isGroupCollapsed || collapsed) && (
                   <div className="space-y-0.5">
                     {visibleItems.map((item) => {
                       const Icon = item.icon
-                      const isActive = location.pathname === item.href ||
-                        (item.href !== '/dashboard' && location.pathname.startsWith(item.href + '/'))
+                      const isActive = location.pathname === item.href || location.pathname.startsWith(item.href + '/')
                       const locked = !canAccess(item.pageKey)
-
                       return (
                         <Link
                           key={item.href}
                           to={item.href}
-                          title={collapsed ? (locked ? `${item.label} (Restricted)` : item.label) : undefined}
-                          className={`
-                            flex items-center gap-3 rounded-xl text-sm font-medium transition-all duration-150
-                            ${collapsed ? 'px-0 py-2.5 justify-center mx-1' : 'px-3 py-2.5'}
-                            ${isActive
-                              ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
+                          title={collapsed ? (locked ? `${item.label} (Access Denied)` : item.label) : undefined}
+                          className={`flex items-center gap-3 rounded-lg text-sm font-medium transition-all ${
+                            collapsed ? 'px-0 py-2 justify-center' : 'px-3 py-2'
+                          } ${
+                            isActive
+                              ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/30'
                               : locked
-                              ? 'text-slate-700 hover:bg-slate-800/40 hover:text-slate-500'
-                              : 'text-slate-400 hover:bg-slate-800/70 hover:text-white'
-                            }
-                          `}
+                              ? 'text-slate-600 hover:bg-slate-800/50 hover:text-slate-400'
+                              : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                          }`}
                         >
-                          <Icon
-                            size={16}
-                            className={`flex-shrink-0 transition-transform ${
-                              isActive ? 'scale-105' : locked && !isActive ? 'opacity-30' : ''
-                            }`}
-                          />
+                          <Icon size={16} className={`flex-shrink-0 ${locked && !isActive ? 'opacity-40' : ''}`} />
                           {!collapsed && (
                             <>
-                              <span className={`flex-1 truncate ${locked ? 'opacity-30' : ''}`}>{item.label}</span>
-                              {locked && !isActive && <Lock size={10} className="text-slate-700 flex-shrink-0" />}
-                              {isActive && !locked && <ChevronRight size={12} className="opacity-60" />}
+                              <span className={`flex-1 truncate ${locked ? 'opacity-40' : ''}`}>{item.label}</span>
+                              {locked && !isActive && <Lock size={11} className="text-slate-600 flex-shrink-0" />}
+                              {isActive && !locked && <ChevronRight size={13} />}
                             </>
                           )}
                         </Link>
@@ -302,33 +240,29 @@ export default function Sidebar({ userRole, userName, userEmail: userEmailProp, 
           })}
         </nav>
 
-        {/* ── User section ── */}
-        <div className="border-t border-slate-800/60 p-3 space-y-1 flex-shrink-0">
+        <div className="p-2 border-t border-slate-700">
           {!collapsed && companyName && (
-            <div className="flex items-center gap-2 px-2 py-1.5 mb-1 bg-slate-800/50 rounded-lg border border-slate-700/40">
-              <Building2 size={11} className="text-blue-400 flex-shrink-0" />
-              <span className="text-blue-300 text-xs truncate flex-1 font-medium">{companyName}</span>
+            <div className="flex items-center gap-2 px-2 py-1.5 mb-2 bg-slate-800 rounded-lg">
+              <Building2 size={12} className="text-blue-400 flex-shrink-0" />
+              <span className="text-blue-300 text-xs truncate flex-1">{companyName}</span>
             </div>
           )}
 
           {!collapsed && (
-            <div className="flex items-center gap-3 px-2 py-2">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-md">
+            <div className="flex items-center gap-3 px-2 py-2 mb-1">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
                 {initials}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-white text-sm font-semibold truncate leading-tight">{displayName}</p>
-                <p className="text-slate-500 text-xs truncate">{userEmail}</p>
+                <p className="text-white text-sm font-medium truncate">{displayName}</p>
+                <p className="text-slate-400 text-xs truncate">{userEmail}</p>
               </div>
             </div>
           )}
 
           {collapsed && (
-            <div className="flex justify-center py-1">
-              <div
-                className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-xs font-bold shadow-md"
-                title={displayName}
-              >
+            <div className="flex justify-center py-1 mb-1">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold" title={displayName}>
                 {initials}
               </div>
             </div>
@@ -337,9 +271,9 @@ export default function Sidebar({ userRole, userName, userEmail: userEmailProp, 
           {!collapsed && companiesCount > 1 && (
             <button
               onClick={() => { setShowSwitchModal(true); setSwitchError('') }}
-              className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-slate-400 hover:bg-slate-800/70 hover:text-white text-sm font-medium transition-colors"
+              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-700 hover:text-white text-sm font-medium transition-colors mb-0.5"
             >
-              <RefreshCw size={14} />
+              <RefreshCw size={15} />
               Switch Company
             </button>
           )}
@@ -347,17 +281,16 @@ export default function Sidebar({ userRole, userName, userEmail: userEmailProp, 
           <button
             onClick={handleLogout}
             title={collapsed ? 'Logout' : undefined}
-            className={`w-full flex items-center rounded-xl text-slate-500 hover:bg-red-900/20 hover:text-red-400 text-sm font-medium transition-all ${
+            className={`w-full flex items-center rounded-lg text-slate-400 hover:bg-red-900/30 hover:text-red-400 text-sm font-medium transition-colors ${
               collapsed ? 'justify-center py-2.5 px-0' : 'gap-3 px-3 py-2.5'
             }`}
           >
-            <LogOut size={16} />
+            <LogOut size={18} />
             {!collapsed && 'Logout'}
           </button>
         </div>
       </aside>
 
-      {/* Switch company modal */}
       {showSwitchModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">

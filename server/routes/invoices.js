@@ -197,7 +197,7 @@ router.post('/:id/email', async (req, res) => {
     const emailSubject = subject || `Invoice ${invoice.invoiceNumber} from ${req.user.companyName}`
     const htmlBody = buildEmailTemplate({
       title: 'INVOICE', documentNumber: invoice.invoiceNumber, customerName: invoice.customerName,
-      companyName: req.user.companyName || 'Nexora ERP', message,
+      companyName: req.user.companyName || 'SmartBilling', message,
       details: [
         { label: 'Invoice Number', value: invoice.invoiceNumber },
         { label: 'Total Amount', value: `₹${invoice.grandTotal?.toLocaleString('en-IN')}` },

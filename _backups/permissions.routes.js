@@ -3,7 +3,7 @@ import { authenticate } from '../lib/auth.js'
 import { connectMasterDB } from '../lib/mongodb.js'
 import Company from '../models/master/Company.js'
 import User from '../models/master/User.js'
-import { ALL_PAGE_KEYS, ALWAYS_ALLOWED_PAGES, ROLE_HIERARCHY, PLAN_PAGES } from '../lib/permissions.js'
+import { ALL_PAGE_KEYS, ALWAYS_ALLOWED_PAGES, ROLE_HIERARCHY } from '../lib/permissions.js'
 
 const router = Router()
 router.use(authenticate)
@@ -17,18 +17,14 @@ router.get('/my', async (req, res) => {
     }
 
     await connectMasterDB()
-    const company = await Company.findById(req.user.companyId).select('allowedPages subscription').lean()
+    const company = await Company.findById(req.user.companyId).select('allowedPages').lean()
 
-    // Plan-based maximum pages (default to 'free' for new/existing companies without a plan)
-    const planKey = company?.subscription?.plan || 'free'
-    const planPages = PLAN_PAGES[planKey] || PLAN_PAGES.free
+    // Company-level allowed pages: empty = all pages allowed
+    const companyAllowed = (company?.allowedPages?.length > 0)
+      ? company.allowedPages
+      : [...ALL_PAGE_KEYS]
 
-    // Company-level allowed pages: if empty, use plan pages directly.
-    // Always intersect with plan pages so super_admin can't manually add pages beyond the plan.
-    const rawAllowed = company?.allowedPages?.length > 0 ? company.allowedPages : planPages
-    const companyAllowed = rawAllowed.filter((p) => planPages.includes(p))
-
-    // Admin gets all company-allowed pages (subject to plan), but no user-level restriction
+    // Admin gets all company-allowed pages — still subject to company-level restrictions
     if (ROLE_HIERARCHY[req.user.role] >= ROLE_HIERARCHY['admin']) {
       const result = [...new Set([...ALWAYS_ALLOWED_PAGES, ...companyAllowed])]
       return res.json({ success: true, data: { allowedPages: result, isFullAccess: false } })
@@ -43,12 +39,15 @@ router.get('/my', async (req, res) => {
 
     let effective
     if (userPages && userPages.length > 0) {
+      // Intersection: user's selected pages that are also company-allowed
       effective = companyAllowed.filter((p) => userPages.includes(p))
     } else {
       effective = companyAllowed
     }
 
+    // Always include always-allowed pages
     const result = [...new Set([...ALWAYS_ALLOWED_PAGES, ...effective])]
+
     return res.json({ success: true, data: { allowedPages: result, isFullAccess: false } })
   } catch (err) {
     return res.status(500).json({ success: false, message: err.message })

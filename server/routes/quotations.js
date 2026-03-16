@@ -208,7 +208,7 @@ router.post('/:id/email', async (req, res) => {
     const emailSubject = subject || `Quotation ${quotation.quotationNumber} from ${req.user.companyName}`
     const htmlBody = buildEmailTemplate({
       title: 'QUOTATION', documentNumber: quotation.quotationNumber, customerName: quotation.customerName,
-      companyName: req.user.companyName || 'Nexora ERP', message,
+      companyName: req.user.companyName || 'SmartBilling', message,
       details: [
         { label: 'Quotation Number', value: quotation.quotationNumber },
         { label: 'Total Amount', value: `₹${quotation.grandTotal?.toLocaleString('en-IN')}` },

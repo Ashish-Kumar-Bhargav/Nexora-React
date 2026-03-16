@@ -195,7 +195,7 @@ export default function InventoryPage() {
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-800">Inventory</h1>
           <p className="text-sm text-gray-400 mt-0.5">{total} records · {stockSummary.length} products tracked</p>
@@ -539,7 +539,7 @@ export default function InventoryPage() {
       {/* Add Stock Form Modal */}
       {showForm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between p-5 border-b">
               <h2 className="text-base font-semibold text-gray-800">
                 {form.type === 'stock_in' ? '↑ Stock In' : '↓ Stock Out'}
@@ -549,7 +549,7 @@ export default function InventoryPage() {
               </button>
             </div>
             {error && <div className="mx-5 mt-4 bg-red-50 border border-red-200 text-red-700 rounded-lg px-3 py-2 text-sm">{error}</div>}
-            <form onSubmit={handleCreate} className="p-5 grid grid-cols-2 gap-4">
+            <form onSubmit={handleCreate} className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="col-span-2">
                 <label className="block text-xs font-medium text-gray-600 mb-1">Product *</label>
                 <select required value={form.productId} onChange={(e) => handleProductSelect(e.target.value)}

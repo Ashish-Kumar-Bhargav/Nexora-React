@@ -19,7 +19,7 @@ export function createTransporter(smtp) {
 }
 
 export function buildFromAddress(smtp) {
-  const name = smtp?.fromName || process.env.SMTP_FROM_NAME || 'Nexora ERP'
+  const name = smtp?.fromName || process.env.SMTP_FROM_NAME || 'SmartBilling'
   const email = smtp?.from || smtp?.user || process.env.SMTP_FROM || process.env.SMTP_USER || ''
   return `"${name}" <${email}>`
 }
@@ -56,7 +56,7 @@ export function buildEmailTemplate({ title, documentNumber, customerName, compan
       <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
         <tr>
           <td style="background:#2563eb;padding:28px 40px;">
-            <div style="font-size:22px;font-weight:700;color:#fff;letter-spacing:2px;">NEXORA</div>
+            <div style="font-size:22px;font-weight:700;color:#fff;letter-spacing:2px;">SMARTBILLING</div>
             <div style="font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px;">${title}</div>
           </td>
         </tr>
@@ -67,7 +67,7 @@ export function buildEmailTemplate({ title, documentNumber, customerName, compan
             <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:8px;overflow:hidden;margin:24px 0;">
               ${detailRows}
             </table>
-            <p style="margin:24px 0 0;font-size:13px;color:#94a3b8;">Sent by ${companyName} via Nexora ERP</p>
+            <p style="margin:24px 0 0;font-size:13px;color:#94a3b8;">Sent by ${companyName} via SmartBilling</p>
           </td>
         </tr>
       </table>

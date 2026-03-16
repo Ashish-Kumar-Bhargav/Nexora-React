@@ -20,15 +20,8 @@ const companySchema = new mongoose.Schema(
     smtpPass: String,
     smtpFrom: String,
     smtpFromName: String,
-    // Empty array = plan default pages. Non-empty = super_admin customised subset of plan pages.
+    // Empty array = all pages allowed (default). Non-empty = only these pages are accessible.
     allowedPages: { type: [String], default: [] },
-    subscription: {
-      plan: { type: String, enum: ['free', 'starter', 'pro', 'max'], default: 'free' },
-      status: { type: String, enum: ['active', 'expired', 'cancelled'], default: 'active' },
-      startDate: { type: Date },
-      endDate: { type: Date },
-      transactionId: { type: String },
-    },
   },
   { timestamps: true }
 )

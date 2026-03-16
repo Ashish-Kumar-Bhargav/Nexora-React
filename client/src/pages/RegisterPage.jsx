@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Eye, EyeOff, Zap, Building2, User, ChevronRight, ChevronLeft, CheckCircle, Upload, X } from 'lucide-react'
+import { Eye, EyeOff, Building2, User, ChevronRight, ChevronLeft, CheckCircle, Upload, X } from 'lucide-react'
+import BrandIcon from '../components/BrandIcon.jsx'
 
 const initial = {
   companyName: '', companyCode: '', companyEmail: '', companyPhone: '', companyAddress: '', gstNumber: '',
@@ -113,9 +114,11 @@ export default function RegisterPage() {
       <div className="w-full max-w-lg">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4 shadow-lg shadow-blue-500/30">
-            <Zap className="w-8 h-8 text-white" />
+            <BrandIcon size={32} />
           </div>
-          <h1 className="text-3xl font-bold text-white tracking-wide">NEXORA</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight">
+            <span className="text-white">Smart</span><span className="text-blue-400">Billing</span>
+          </h1>
           <p className="text-blue-300 mt-1 text-sm">Multi-Company ERP System</p>
         </div>
 
@@ -299,7 +302,7 @@ export default function RegisterPage() {
         )}
 
         <p className="text-center text-blue-300 text-xs mt-6">
-          &copy; {new Date().getFullYear()} Nexora ERP. All rights reserved.
+          &copy; {new Date().getFullYear()} SmartBilling. All rights reserved.
         </p>
       </div>
     </div>

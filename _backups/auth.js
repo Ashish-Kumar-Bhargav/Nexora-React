@@ -4,7 +4,6 @@ import { connectMasterDB } from '../lib/mongodb.js'
 import User from '../models/master/User.js'
 import Company from '../models/master/Company.js'
 import { comparePassword, hashPassword, signToken, authenticate } from '../lib/auth.js'
-import { PLAN_PAGES } from '../lib/permissions.js'
 
 const router = Router()
 
@@ -141,8 +140,6 @@ router.post('/register', async (req, res) => {
       address: companyAddress?.trim() || '', phone: companyPhone?.trim() || '',
       email: companyEmail?.trim().toLowerCase() || '', gstNumber: gstNumber?.trim() || '',
       logo: logo || undefined, signature: signature || undefined, isActive: true,
-      subscription: { plan: 'free', status: 'active', startDate: new Date() },
-      allowedPages: PLAN_PAGES['free'],
     })
 
     const hashedPassword = await hashPassword(adminPassword)

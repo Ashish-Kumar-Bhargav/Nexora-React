@@ -4,7 +4,7 @@ const productSchema = new mongoose.Schema(
   {
     companyId: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true },
     name: { type: String, required: true },
-    code: { type: String },
+    code: { type: String }, 
     category: { type: String, required: true },
     description: { type: String },
     unit: { type: String, default: 'pcs' },

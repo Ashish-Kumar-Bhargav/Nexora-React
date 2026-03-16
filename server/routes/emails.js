@@ -44,8 +44,8 @@ router.post('/test', async (req, res) => {
     await transporter.verify()
     await transporter.sendMail({
       from: `"${company.smtpFromName || company.name}" <${company.smtpFrom || company.smtpUser}>`,
-      to, subject: 'Nexora ERP — SMTP Test',
-      html: `<p>This is a test email from <strong>${company.name}</strong> via Nexora ERP.</p><p>Your SMTP configuration is working correctly!</p>`,
+      to, subject: 'SmartBilling — SMTP Test',
+      html: `<p>This is a test email from <strong>${company.name}</strong> via SmartBilling.</p><p>Your SMTP configuration is working correctly!</p>`,
     })
     return res.json({ success: true, message: `Test email sent to ${to}` })
   } catch (err) { return res.status(500).json({ success: false, message: err.message }) }

@@ -21,47 +21,6 @@ export const ROLE_HIERARCHY = {
   super_admin: 4,
 }
 
-// Subscription plan definitions
-export const PLAN_DETAILS = {
-  free: {
-    name: 'Free',
-    price: 0,
-    description: 'Perfect for freelancers & startups',
-    pages: ['dashboard', 'customers', 'invoices', 'products'],
-  },
-  starter: {
-    name: 'Starter',
-    price: 999,
-    description: 'For small businesses growing fast',
-    pages: ['dashboard', 'customers', 'invoices', 'quotations', 'products', 'inventory'],
-  },
-  pro: {
-    name: 'Pro',
-    price: 2499,
-    description: 'For businesses ready to scale',
-    pages: [
-      'dashboard', 'customers', 'invoices', 'quotations', 'credit-notes',
-      'recurring-invoices', 'suppliers', 'purchase-orders', 'products',
-      'inventory', 'reports', 'custom-fields',
-    ],
-  },
-  max: {
-    name: 'Max',
-    price: 4999,
-    description: 'Full power for enterprises',
-    pages: [
-      'dashboard', 'customers', 'invoices', 'quotations', 'credit-notes',
-      'recurring-invoices', 'suppliers', 'purchase-orders', 'products',
-      'inventory', 'reports', 'activity-log', 'users', 'custom-fields', 'smtp-settings',
-    ],
-  },
-}
-
-// Quick lookup: plan key → allowed page keys
-export const PLAN_PAGES = Object.fromEntries(
-  Object.entries(PLAN_DETAILS).map(([key, val]) => [key, val.pages])
-)
-
 export const DEFAULT_PERMISSIONS = {
   invoices: { view: true, create: true, update: false, delete: false },
   quotations: { view: true, create: true, update: false, delete: false },

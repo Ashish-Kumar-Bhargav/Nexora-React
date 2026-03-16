@@ -20,6 +20,7 @@ export default function DashboardLayout() {
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [checked, setChecked] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     const u = readUserFromStorage()
@@ -40,10 +41,20 @@ export default function DashboardLayout() {
     <PermissionsProvider>
       <NavigationProgress />
       <div className="flex h-screen bg-gray-50 dark:bg-slate-900 overflow-hidden">
-        <Sidebar userRole={user.role} userName={user.name} userEmail={user.email} userCompanyName={user.companyName} />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Header user={{ name: user.name, email: user.email, role: user.role, companyName: user.companyName }} />
-          <main className="flex-1 overflow-y-auto p-6">
+        <Sidebar
+          userRole={user.role}
+          userName={user.name}
+          userEmail={user.email}
+          userCompanyName={user.companyName}
+          mobileOpen={mobileOpen}
+          onClose={() => setMobileOpen(false)}
+        />
+        <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+          <Header
+            user={{ name: user.name, email: user.email, role: user.role, companyName: user.companyName }}
+            onMenuClick={() => setMobileOpen(true)}
+          />
+          <main className="flex-1 overflow-y-auto p-4 lg:p-6">
             <Outlet />
           </main>
         </div>
