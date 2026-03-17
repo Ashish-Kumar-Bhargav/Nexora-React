@@ -312,7 +312,7 @@ export default function PurchaseOrdersPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Purchase Orders</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-slate-100">Purchase Orders</h1>
           <p className="text-sm text-gray-500 mt-0.5">Manage procurement from suppliers</p>
         </div>
         <button onClick={openCreateForm}
@@ -325,7 +325,7 @@ export default function PurchaseOrdersPage() {
       {showForm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-5 border-b sticky top-0 bg-white z-10">
+            <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-slate-700 sticky top-0 bg-white dark:bg-slate-800 z-10">
               <h2 className="text-base font-semibold text-gray-800">
                 {editingPO ? `Edit Purchase Order — ${editingPO.poNumber}` : 'Create Purchase Order'}
               </h2>
@@ -337,22 +337,22 @@ export default function PurchaseOrdersPage() {
             <form onSubmit={handleSubmit} className="p-5 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Supplier *</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Supplier *</label>
                   <select required value={form.supplierId} onChange={(e) => setForm({ ...form, supplierId: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400">
                     <option value="">Select supplier</option>
                     {suppliers.map((s) => <option key={s._id} value={s._id}>{s.name}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Expected Delivery</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Expected Delivery</label>
                   <input type="date" value={form.expectedDelivery} onChange={(e) => setForm({ ...form, expectedDelivery: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Notes</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Notes</label>
                   <input value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
                 </div>
               </div>
 
@@ -434,7 +434,7 @@ export default function PurchaseOrdersPage() {
       )}
 
       {/* List */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
         {loading ? (
           <div className="flex justify-center py-16">
             <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full" />
@@ -448,23 +448,23 @@ export default function PurchaseOrdersPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="bg-gray-50 border-b border-gray-100">
-                  <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">PO #</th>
-                  <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Supplier</th>
-                  <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Amount</th>
-                  <th className="text-center px-5 py-3 text-xs font-medium text-gray-500">Status</th>
-                  <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Expected</th>
-                  <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Created</th>
-                  <th className="text-center px-5 py-3 text-xs font-medium text-gray-500">Actions</th>
+                <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">PO #</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Supplier</th>
+                  <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300">Amount</th>
+                  <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300">Status</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Expected</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Created</th>
+                  <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {pos.map((po) => (
                   <>
-                    <tr key={po._id} className="border-t border-gray-50 hover:bg-gray-50/50 cursor-pointer"
+                    <tr key={po._id} className="border-t border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 cursor-pointer"
                       onClick={() => setExpandedId(expandedId === po._id ? null : po._id)}>
-                      <td className="px-5 py-3 font-medium text-gray-800">{po.poNumber}</td>
-                      <td className="px-5 py-3 text-gray-700">{po.supplierName}</td>
+                      <td className="px-5 py-3 font-medium text-gray-800 dark:text-slate-100">{po.poNumber}</td>
+                      <td className="px-5 py-3 text-gray-700 dark:text-slate-200">{po.supplierName}</td>
                       <td className="px-5 py-3 text-right font-semibold">₹{po.grandTotal.toLocaleString('en-IN')}</td>
                       <td className="px-5 py-3 text-center">
                         <span className={`text-xs font-medium px-2.5 py-1 rounded-full capitalize ${STATUS_STYLES[po.status]}`}>{po.status}</span>
@@ -584,27 +584,27 @@ export default function PurchaseOrdersPage() {
                   </div>
                 )}
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">To * <span className="text-gray-400 font-normal">(comma-separate multiple emails)</span></label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">To * <span className="text-gray-400 font-normal">(comma-separate multiple emails)</span></label>
                   <input value={emailTo} onChange={(e) => setEmailTo(e.target.value)} placeholder="one@example.com, two@example.com"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">CC <span className="text-gray-400 font-normal">(comma-separate multiple emails)</span></label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">CC <span className="text-gray-400 font-normal">(comma-separate multiple emails)</span></label>
                   <input value={emailCc} onChange={(e) => setEmailCc(e.target.value)} placeholder="cc1@example.com, cc2@example.com"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">BCC <span className="text-gray-400 font-normal">(comma-separate multiple emails)</span></label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">BCC <span className="text-gray-400 font-normal">(comma-separate multiple emails)</span></label>
                   <input value={emailBcc} onChange={(e) => setEmailBcc(e.target.value)} placeholder="bcc@example.com"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Subject</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Subject</label>
                   <input value={emailSubject} onChange={(e) => setEmailSubject(e.target.value)}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Message</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Message</label>
                   <textarea value={emailMessage} onChange={(e) => setEmailMessage(e.target.value)} rows={4}
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" />
                 </div>

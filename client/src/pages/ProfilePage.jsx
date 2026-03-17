@@ -105,11 +105,11 @@ export default function ProfilePage() {
   return (
     <div className="max-w-2xl">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">My Profile</h1>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-slate-100">My Profile</h1>
         <p className="text-sm text-gray-500 mt-0.5">Update your personal information and password</p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6 mb-6">
         <div className="flex items-center gap-3 mb-5">
           <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
             <User className="w-4 h-4 text-blue-600" />
@@ -126,24 +126,24 @@ export default function ProfilePage() {
         <form onSubmit={handleSaveProfile} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Full Name *</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Full Name *</label>
               <input
                 required value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Phone</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Phone</label>
               <input
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
               />
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Email</label>
+            <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Email</label>
             <input
               value={form.email} disabled
               className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50 text-gray-400 cursor-not-allowed"
@@ -158,7 +158,7 @@ export default function ProfilePage() {
         </form>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
         <div className="flex items-center gap-3 mb-5">
           <div className="w-9 h-9 bg-orange-100 rounded-lg flex items-center justify-center">
             <Lock className="w-4 h-4 text-orange-600" />
@@ -174,7 +174,7 @@ export default function ProfilePage() {
 
         <form onSubmit={handleChangePassword} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">New Password *</label>
+            <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">New Password *</label>
             <div className="relative">
               <input
                 type={showPw ? 'text' : 'password'}
@@ -191,13 +191,13 @@ export default function ProfilePage() {
             </div>
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Confirm New Password *</label>
+            <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Confirm New Password *</label>
             <input
               type="password" required
               value={pwForm.confirm}
               onChange={(e) => setPwForm({ ...pwForm, confirm: e.target.value })}
               placeholder="Repeat new password"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
             />
           </div>
           <button type="submit" disabled={savingPw}

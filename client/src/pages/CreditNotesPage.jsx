@@ -88,11 +88,11 @@ export default function CreditNotesPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Credit Notes</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-50">Credit Notes</h1>
           <p className="text-sm text-gray-500 mt-0.5">Issue refunds and adjustments against paid invoices</p>
         </div>
         <button onClick={openForm}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition shadow-sm">
+          className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm shadow-blue-200 dark:shadow-blue-900/30">
           <Plus className="w-4 h-4" /> New Credit Note
         </button>
       </div>
@@ -109,9 +109,9 @@ export default function CreditNotesPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Paid Invoice *</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Paid Invoice *</label>
                 <select required value={form.invoiceId} onChange={(e) => setForm({ ...form, invoiceId: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400">
                   <option value="">Select invoice</option>
                   {invoices.map((i) => (
                     <option key={i._id} value={i._id}>{i.invoiceNumber} — {i.customerName} (₹{i.grandTotal.toLocaleString()})</option>
@@ -119,27 +119,27 @@ export default function CreditNotesPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Credit Amount *</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Credit Amount *</label>
                 <input type="number" min="0.01" step="0.01" required
                   max={selectedInvoice?.grandTotal}
                   value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })}
                   placeholder="0.00"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
                 {selectedInvoice && <p className="text-xs text-gray-400 mt-1">Max: ₹{selectedInvoice.grandTotal.toLocaleString()}</p>}
               </div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Reason *</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Reason *</label>
               <input required value={form.reason} onChange={(e) => setForm({ ...form, reason: e.target.value })}
                 placeholder="e.g. Returned goods, billing error, discount"
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Notes</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Notes</label>
               <input value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
             </div>
             <div className="flex gap-3">
               <button type="submit" disabled={submitting}
@@ -155,7 +155,7 @@ export default function CreditNotesPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
         {loading ? (
           <div className="flex justify-center py-16">
             <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full" />
@@ -168,22 +168,22 @@ export default function CreditNotesPage() {
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-100">
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">CN #</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Invoice</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Customer</th>
-                <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Amount</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Reason</th>
-                <th className="text-center px-5 py-3 text-xs font-medium text-gray-500">Status</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Date</th>
-                <th className="text-center px-5 py-3 text-xs font-medium text-gray-500">Actions</th>
+              <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">CN #</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Invoice</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Customer</th>
+                <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300">Amount</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Reason</th>
+                <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300">Status</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Date</th>
+                <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300">Actions</th>
               </tr>
             </thead>
             <tbody>
               {creditNotes.map((cn) => (
-                <tr key={cn._id} className="border-t border-gray-50 hover:bg-gray-50/50">
-                  <td className="px-5 py-3 font-medium text-gray-800">{cn.creditNoteNumber}</td>
-                  <td className="px-5 py-3 text-gray-600">{cn.invoiceNumber}</td>
+                <tr key={cn._id} className="border-t border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 transition-colors">
+                  <td className="px-5 py-3 font-medium text-gray-800 dark:text-slate-100">{cn.creditNoteNumber}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-slate-300">{cn.invoiceNumber}</td>
                   <td className="px-5 py-3 text-gray-700">{cn.customerName}</td>
                   <td className="px-5 py-3 text-right font-semibold text-gray-800">₹{cn.amount.toLocaleString('en-IN')}</td>
                   <td className="px-5 py-3 text-gray-500 max-w-xs truncate">{cn.reason}</td>

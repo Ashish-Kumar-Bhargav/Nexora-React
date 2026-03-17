@@ -65,7 +65,7 @@ export default function ActivityLogPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Activity Log</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-50">Activity Log</h1>
           <p className="text-sm text-gray-500 mt-0.5">Track all user actions in your company</p>
         </div>
         <span className="text-sm text-gray-400">{total.toLocaleString()} entries</span>
@@ -93,7 +93,7 @@ export default function ActivityLogPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
         {loading ? (
           <div className="flex justify-center py-16">
             <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full" />
@@ -106,28 +106,28 @@ export default function ActivityLogPage() {
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-100">
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">User</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Action</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Module</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Details</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Date & Time</th>
+              <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">User</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Action</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Module</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Details</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Date & Time</th>
               </tr>
             </thead>
             <tbody>
               {logs.map((log) => (
-                <tr key={log._id} className="border-t border-gray-50 hover:bg-gray-50/50">
-                  <td className="px-5 py-3 font-medium text-gray-800">{log.userName || '—'}</td>
+                <tr key={log._id} className="border-t border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 transition-colors">
+                  <td className="px-5 py-3 font-medium text-gray-800 dark:text-slate-100">{log.userName || '—'}</td>
                   <td className="px-5 py-3">
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${ACTION_STYLES[log.action] || 'bg-gray-100 text-gray-600'}`}>
                       {log.action}
                     </span>
                   </td>
-                  <td className="px-5 py-3 text-gray-600 capitalize">{log.module}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-slate-300 capitalize">{log.module}</td>
                   <td className="px-5 py-3 text-gray-400 text-xs max-w-xs truncate">
                     {log.details ? Object.entries(log.details).map(([k, v]) => `${k}: ${String(v)}`).join(', ') : '—'}
                   </td>
-                  <td className="px-5 py-3 text-gray-500 whitespace-nowrap">
+                  <td className="px-5 py-3 text-gray-500 dark:text-slate-400 whitespace-nowrap">
                     {format(new Date(log.createdAt), 'dd MMM yyyy HH:mm')}
                   </td>
                 </tr>

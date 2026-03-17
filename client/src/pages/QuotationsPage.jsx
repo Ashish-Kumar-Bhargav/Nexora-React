@@ -547,7 +547,7 @@ export default function QuotationsPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Quotations</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-slate-100">Quotations</h1>
           <p className="text-sm text-gray-500 mt-0.5">Create and manage sales quotations</p>
         </div>
         <button
@@ -560,7 +560,7 @@ export default function QuotationsPage() {
       </div>
 
       {showForm && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6 mb-6">
           <h2 className="text-base font-semibold text-gray-800 mb-4">
             {editingQuotation ? 'Edit Quotation' : 'Create Quotation'}
           </h2>
@@ -570,11 +570,11 @@ export default function QuotationsPage() {
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Customer *</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Customer *</label>
                 <select
                   required value={form.customerId}
                   onChange={(e) => setForm({ ...form, customerId: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 >
                   <option value="">Select customer</option>
                   {customers.map((c) => (
@@ -583,19 +583,19 @@ export default function QuotationsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Valid Until</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Valid Until</label>
                 <input
                   type="date" value={form.validUntil}
                   onChange={(e) => setForm({ ...form, validUntil: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Notes</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Notes</label>
                 <input
                   value={form.notes}
                   onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
               </div>
             </div>
@@ -686,8 +686,8 @@ export default function QuotationsPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-        <DataTable columns={columns} data={quotations} loading={loading} />
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700">
+        <DataTable columns={columns} data={quotations} loading={loading} seamless />
       </div>
 
       {/* ── Email Modal ── */}

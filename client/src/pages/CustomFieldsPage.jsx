@@ -121,7 +121,7 @@ export default function CustomFieldsPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Custom Fields</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-slate-100">Custom Fields</h1>
           <p className="text-sm text-gray-500 mt-0.5">Define additional fields for your modules</p>
         </div>
         <button
@@ -165,12 +165,12 @@ export default function CustomFieldsPage() {
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Field Label *</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Field Label *</label>
                 <input
                   required value={form.fieldLabel}
                   onChange={(e) => setForm({ ...form, fieldLabel: e.target.value })}
                   placeholder="e.g. GST Number"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
                 {form.fieldLabel && (
                   <p className="text-xs text-gray-400 mt-1">
@@ -179,11 +179,11 @@ export default function CustomFieldsPage() {
                 )}
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Field Type</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Field Type</label>
                 <select
                   value={form.fieldType}
                   onChange={(e) => setForm({ ...form, fieldType: e.target.value, options: [] })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 >
                   {FIELD_TYPES.map((t) => (
                     <option key={t.value} value={t.value}>{t.label}</option>
@@ -191,11 +191,11 @@ export default function CustomFieldsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Sort Order</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Sort Order</label>
                 <input
                   type="number" value={form.sortOrder}
                   onChange={(e) => setForm({ ...form, sortOrder: Number(e.target.value) })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
               </div>
             </div>
@@ -267,7 +267,7 @@ export default function CustomFieldsPage() {
       )}
 
       {/* Fields List */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
           <h2 className="text-base font-semibold text-gray-700">
             {MODULES.find((m) => m.value === activeModule)?.label} Fields

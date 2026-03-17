@@ -107,10 +107,10 @@ export default function CustomersPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Customers</h1>
-          <p className="text-gray-500 text-sm mt-0.5">{customers.length} total customers</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-50">Customers</h1>
+          <p className="text-gray-500 dark:text-slate-400 text-sm mt-0.5">{customers.length} total customers</p>
         </div>
-        <button onClick={openAdd} className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium shadow-sm">
+        <button onClick={openAdd} className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all text-sm font-medium shadow-sm shadow-blue-200 dark:shadow-blue-900/30">
           <Plus size={16} /> Add Customer
         </button>
       </div>
@@ -122,28 +122,28 @@ export default function CustomersPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-        <div className="p-4 border-b border-gray-100 flex items-center gap-3">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700">
+        <div className="p-4 border-b border-gray-100 dark:border-slate-700 flex items-center gap-3 bg-white dark:bg-slate-800">
           <div className="relative flex-1 max-w-xs">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               value={search}
               onChange={(e) => { setSearch(e.target.value); fetchCustomers(e.target.value) }}
               placeholder="Search customers..."
-              className="pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="pl-9 pr-4 py-2 border border-gray-200 dark:border-slate-600 rounded-lg text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
             />
           </div>
-          <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1.5 rounded-lg">
+          <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 px-3 py-1.5 rounded-full">
             {customers.length} records
           </span>
         </div>
-        <DataTable columns={columns} data={customers} loading={loading} />
+        <DataTable columns={columns} data={customers} loading={loading} seamless />
       </div>
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-5 border-b border-gray-100">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-slate-700 bg-white dark:bg-slate-800">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                   <Users size={16} className="text-blue-600" />
@@ -152,13 +152,13 @@ export default function CustomersPage() {
               </div>
               <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg p-1"><X size={18} /></button>
             </div>
-            <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white dark:bg-slate-800">
               {error && <div className="col-span-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-3 py-2 text-sm">{error}</div>}
               {fields.map(({ key, label, placeholder }) => (
                 <div key={key} className={key === 'address' ? 'col-span-2' : ''}>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">{label}</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">{label}</label>
                   <input
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none hover:border-gray-300 transition-colors"
+                    className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400 hover:border-gray-300 dark:hover:border-slate-500 transition-colors"
                     placeholder={placeholder}
                     value={form[key]}
                     onChange={(e) => setForm({ ...form, [key]: e.target.value })}
@@ -166,7 +166,7 @@ export default function CustomersPage() {
                 </div>
               ))}
             </div>
-            <div className="flex justify-end gap-3 px-5 pb-5">
+            <div className="flex justify-end gap-3 px-5 pb-5 bg-white dark:bg-slate-800">
               <button onClick={() => setShowModal(false)} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">Cancel</button>
               <button onClick={handleSave} disabled={saving} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 disabled:opacity-50 transition-colors font-medium">
                 {saving ? 'Saving...' : editing ? 'Update Customer' : 'Add Customer'}

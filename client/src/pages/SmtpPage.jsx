@@ -99,7 +99,7 @@ export default function SmtpPage() {
   return (
     <div className="max-w-2xl">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Company Settings</h1>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-slate-100">Company Settings</h1>
         <p className="text-sm text-gray-500 mt-0.5">Configure email, currency, and alert thresholds</p>
       </div>
 
@@ -110,30 +110,30 @@ export default function SmtpPage() {
       )}
 
       <form onSubmit={handleSave} className="space-y-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
           <h2 className="text-base font-semibold text-gray-800 mb-1">General Settings</h2>
           <p className="text-xs text-gray-400 mb-4">Currency is fixed to Indian Rupee (₹ INR)</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Currency</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Currency</label>
               <div className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-gray-50 text-gray-500 flex items-center gap-2">
                 <span className="font-semibold text-gray-700">₹</span> Indian Rupee (INR)
               </div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Low Stock Threshold</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Low Stock Threshold</label>
               <input
                 type="number" min="1" max="1000"
                 value={form.lowStockThreshold}
                 onChange={(e) => setForm({ ...form, lowStockThreshold: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
               />
               <p className="text-xs text-gray-400 mt-1">Alert when stock falls below this quantity</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-9 h-9 bg-blue-100 rounded-lg flex items-center justify-center">
               <Mail className="w-4 h-4 text-blue-600" />
@@ -146,31 +146,31 @@ export default function SmtpPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">SMTP Host</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">SMTP Host</label>
               <input
                 value={form.smtpHost} placeholder="smtp.gmail.com"
                 onChange={(e) => setForm({ ...form, smtpHost: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">SMTP Port</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">SMTP Port</label>
               <input
                 type="number" value={form.smtpPort} placeholder="587"
                 onChange={(e) => setForm({ ...form, smtpPort: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Username / Email</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Username / Email</label>
               <input
                 type="email" value={form.smtpUser} placeholder="noreply@yourcompany.com"
                 onChange={(e) => setForm({ ...form, smtpUser: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Password / App Key</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Password / App Key</label>
               <div className="relative">
                 <input
                   type={showPass ? 'text' : 'password'} value={form.smtpPass} placeholder="••••••••"
@@ -184,19 +184,19 @@ export default function SmtpPage() {
               </div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">From Email</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">From Email</label>
               <input
                 type="email" value={form.smtpFrom} placeholder="invoices@yourcompany.com"
                 onChange={(e) => setForm({ ...form, smtpFrom: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">From Name</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">From Name</label>
               <input
                 value={form.smtpFromName} placeholder="Your Company Name"
                 onChange={(e) => setForm({ ...form, smtpFromName: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
               />
             </div>
           </div>

@@ -70,11 +70,11 @@ export default function SuppliersPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Suppliers</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-50">Suppliers</h1>
           <p className="text-sm text-gray-500 mt-0.5">Manage your vendors and suppliers</p>
         </div>
         <button onClick={openAdd}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition shadow-sm">
+          className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm shadow-blue-200 dark:shadow-blue-900/30">
           <Plus className="w-4 h-4" /> Add Supplier
         </button>
       </div>
@@ -88,9 +88,9 @@ export default function SuppliersPage() {
           {error && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-2 mb-4 text-sm">{error}</div>}
           <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="sm:col-span-2">
-              <label className="block text-xs font-medium text-gray-600 mb-1">Company / Supplier Name *</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Company / Supplier Name *</label>
               <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
             </div>
             {[
               { label: 'Contact Person', key: 'contactPerson' },
@@ -102,16 +102,16 @@ export default function SuppliersPage() {
               { label: 'Payment Terms', key: 'paymentTerms' },
             ].map(({ label, key, type }) => (
               <div key={key}>
-                <label className="block text-xs font-medium text-gray-600 mb-1">{label}</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">{label}</label>
                 <input type={type || 'text'} value={form[key]}
                   onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
               </div>
             ))}
             <div className="sm:col-span-2">
-              <label className="block text-xs font-medium text-gray-600 mb-1">Address</label>
+              <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Address</label>
               <input value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
             </div>
             <div className="sm:col-span-2 flex gap-3">
               <button type="submit" disabled={submitting}
@@ -127,7 +127,7 @@ export default function SuppliersPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
         {loading ? (
           <div className="flex justify-center py-16">
             <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full" />
@@ -140,23 +140,23 @@ export default function SuppliersPage() {
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-100">
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Name</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Contact</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Phone</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Email</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">GST</th>
-                <th className="text-center px-5 py-3 text-xs font-medium text-gray-500">Actions</th>
+              <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Name</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Contact</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Phone</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Email</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">GST</th>
+                <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300">Actions</th>
               </tr>
             </thead>
             <tbody>
               {suppliers.map((s) => (
-                <tr key={s._id} className="border-t border-gray-50 hover:bg-gray-50/50">
-                  <td className="px-5 py-3 font-medium text-gray-800">{s.name}</td>
-                  <td className="px-5 py-3 text-gray-600">{s.contactPerson || '—'}</td>
-                  <td className="px-5 py-3 text-gray-600">{s.phone || '—'}</td>
-                  <td className="px-5 py-3 text-gray-600">{s.email || '—'}</td>
-                  <td className="px-5 py-3 text-gray-600">{s.gstNumber || '—'}</td>
+                <tr key={s._id} className="border-t border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 transition-colors">
+                  <td className="px-5 py-3 font-medium text-gray-800 dark:text-slate-100">{s.name}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-slate-300">{s.contactPerson || '—'}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-slate-300">{s.phone || '—'}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-slate-300">{s.email || '—'}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-slate-300">{s.gstNumber || '—'}</td>
                   <td className="px-5 py-3 text-center">
                     <div className="flex items-center justify-center gap-1">
                       <button onClick={() => openEdit(s)}

@@ -127,7 +127,7 @@ export default function RecurringInvoicesPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Recurring Invoices</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-50">Recurring Invoices</h1>
           <p className="text-sm text-gray-500 mt-0.5">Set up automatic invoice schedules</p>
         </div>
         <button onClick={openForm}
@@ -148,42 +148,42 @@ export default function RecurringInvoicesPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Schedule Name *</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Schedule Name *</label>
                 <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="e.g. Monthly Retainer"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Customer *</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Customer *</label>
                 <select required value={form.customerId} onChange={(e) => setForm({ ...form, customerId: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400">
                   <option value="">Select customer</option>
                   {customers.map((c) => <option key={c._id} value={c._id}>{c.companyName}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Frequency *</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Frequency *</label>
                 <select value={form.frequency} onChange={(e) => setForm({ ...form, frequency: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400">
                   {FREQUENCIES.map((f) => <option key={f.value} value={f.value}>{f.label}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Start Date *</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Start Date *</label>
                 <input required type="date" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">End Date (optional)</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">End Date (optional)</label>
                 <input type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
               </div>
               {form.frequency !== 'weekly' && (
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Day of Month (1-28)</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Day of Month (1-28)</label>
                   <input type="number" min="1" max="28" value={form.dayOfMonth}
                     onChange={(e) => setForm({ ...form, dayOfMonth: e.target.value })}
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
                 </div>
               )}
             </div>
@@ -200,10 +200,10 @@ export default function RecurringInvoicesPage() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-gray-100">
-                      <th className="text-left text-xs font-medium text-gray-500 pb-2 pr-3 min-w-[160px]">Product</th>
-                      <th className="text-left text-xs font-medium text-gray-500 pb-2 pr-3 w-20">Qty</th>
-                      <th className="text-left text-xs font-medium text-gray-500 pb-2 pr-3 w-28">Unit Price</th>
-                      <th className="text-left text-xs font-medium text-gray-500 pb-2 w-28">Total</th>
+                      <th className="text-left text-xs font-semibold text-slate-300 pb-2 pr-3 min-w-[160px]">Product</th>
+                      <th className="text-left text-xs font-semibold text-slate-300 pb-2 pr-3 w-20">Qty</th>
+                      <th className="text-left text-xs font-semibold text-slate-300 pb-2 pr-3 w-28">Unit Price</th>
+                      <th className="text-left text-xs font-semibold text-slate-300 pb-2 w-28">Total</th>
                       <th className="w-8"></th>
                     </tr>
                   </thead>
@@ -260,7 +260,7 @@ export default function RecurringInvoicesPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
         {loading ? (
           <div className="flex justify-center py-16">
             <div className="animate-spin w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full" />
@@ -273,25 +273,25 @@ export default function RecurringInvoicesPage() {
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-100">
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Name</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Customer</th>
-                <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Amount</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Frequency</th>
-                <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Next Run</th>
-                <th className="text-center px-5 py-3 text-xs font-medium text-gray-500">Generated</th>
-                <th className="text-center px-5 py-3 text-xs font-medium text-gray-500">Status</th>
-                <th className="text-center px-5 py-3 text-xs font-medium text-gray-500">Actions</th>
+              <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Name</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Customer</th>
+                <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300">Amount</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Frequency</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Next Run</th>
+                <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300">Generated</th>
+                <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300">Status</th>
+                <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300">Actions</th>
               </tr>
             </thead>
             <tbody>
               {recurring.map((r) => (
-                <tr key={r._id} className="border-t border-gray-50 hover:bg-gray-50/50">
-                  <td className="px-5 py-3 font-medium text-gray-800">{r.name}</td>
-                  <td className="px-5 py-3 text-gray-600">{r.customerName}</td>
+                <tr key={r._id} className="border-t border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 transition-colors">
+                  <td className="px-5 py-3 font-medium text-gray-800 dark:text-slate-100">{r.name}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-slate-300">{r.customerName}</td>
                   <td className="px-5 py-3 text-right font-semibold">₹{r.grandTotal.toLocaleString('en-IN')}</td>
-                  <td className="px-5 py-3 text-gray-600 capitalize">{r.frequency}</td>
-                  <td className="px-5 py-3 text-gray-500">{format(new Date(r.nextRunDate), 'dd MMM yyyy')}</td>
+                  <td className="px-5 py-3 text-gray-600 dark:text-slate-300 capitalize">{r.frequency}</td>
+                  <td className="px-5 py-3 text-gray-500 dark:text-slate-400">{format(new Date(r.nextRunDate), 'dd MMM yyyy')}</td>
                   <td className="px-5 py-3 text-center text-gray-500">{r.invoicesGenerated}</td>
                   <td className="px-5 py-3 text-center">
                     <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${r.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>

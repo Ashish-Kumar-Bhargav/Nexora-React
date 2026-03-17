@@ -610,7 +610,7 @@ export default function InvoicesPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Invoices</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-slate-100">Invoices</h1>
           <p className="text-sm text-gray-500 mt-0.5">Manage and track all invoices</p>
         </div>
         <button
@@ -637,7 +637,7 @@ export default function InvoicesPage() {
 
       {/* ── Create Invoice Form ── */}
       {showForm && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6 mb-6">
           <h2 className="text-base font-semibold text-gray-800 mb-4">Create Invoice</h2>
           {formError && (
             <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-2 mb-4 text-sm">{formError}</div>
@@ -645,11 +645,11 @@ export default function InvoicesPage() {
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Customer *</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Customer *</label>
                 <select
                   required value={form.customerId}
                   onChange={(e) => setForm({ ...form, customerId: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 >
                   <option value="">Select customer</option>
                   {customers.map((c) => (
@@ -658,19 +658,19 @@ export default function InvoicesPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Due Date</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Due Date</label>
                 <input
                   type="date" value={form.dueDate}
                   onChange={(e) => setForm({ ...form, dueDate: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Notes</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Notes</label>
                 <input
                   value={form.notes}
                   onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
               </div>
             </div>
@@ -757,7 +757,7 @@ export default function InvoicesPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {customFieldDefs.map((field) => (
                     <div key={field.fieldKey}>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                      <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">
                         {field.fieldLabel}{field.required && ' *'}
                       </label>
                       {field.fieldType === 'select' ? (
@@ -765,7 +765,7 @@ export default function InvoicesPage() {
                           required={field.required}
                           value={String(form.customFields[field.fieldKey] || '')}
                           onChange={(e) => setCustomField(field.fieldKey, e.target.value)}
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                         >
                           <option value="">Select...</option>
                           {field.options?.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
@@ -774,7 +774,7 @@ export default function InvoicesPage() {
                         <select
                           value={String(form.customFields[field.fieldKey] ?? '')}
                           onChange={(e) => setCustomField(field.fieldKey, e.target.value === 'true')}
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                         >
                           <option value="">Select...</option>
                           <option value="true">Yes</option>
@@ -786,7 +786,7 @@ export default function InvoicesPage() {
                           required={field.required}
                           value={String(form.customFields[field.fieldKey] || '')}
                           onChange={(e) => setCustomField(field.fieldKey, field.fieldType === 'number' ? Number(e.target.value) : e.target.value)}
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                         />
                       )}
                     </div>
@@ -852,8 +852,8 @@ export default function InvoicesPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-        <DataTable columns={columns} data={invoices} loading={loading} />
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700">
+        <DataTable columns={columns} data={invoices} loading={loading} seamless />
       </div>
 
       {/* ── Email Modal ── */}

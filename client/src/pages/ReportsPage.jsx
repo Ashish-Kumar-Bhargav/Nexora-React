@@ -47,11 +47,11 @@ function formatINR(val) {
 
 function StatCard({ title, value, subtitle, icon: Icon, color }) {
   return (
-    <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+    <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-gray-200 dark:border-slate-700">
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-sm text-gray-500 mb-1">{title}</p>
-          <p className="text-2xl font-bold text-gray-800">{value}</p>
+          <p className="text-sm text-gray-500 dark:text-slate-400 mb-1">{title}</p>
+          <p className="text-2xl font-bold text-gray-800 dark:text-slate-100">{value}</p>
           {subtitle && <p className="text-xs text-gray-400 mt-1">{subtitle}</p>}
         </div>
         <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${color}`}>
@@ -299,7 +299,7 @@ export default function ReportsPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Reports</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-slate-100">Reports</h1>
           <p className="text-sm text-gray-500 mt-0.5">Business insights and analytics</p>
         </div>
         <button
@@ -312,7 +312,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Tabs + Filters */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-6">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 mb-6">
         <div className="flex items-center justify-between px-4 pt-4 pb-0 flex-wrap gap-3">
           <div className="flex gap-1 flex-wrap">
             {tabs.map((tab) => {
@@ -448,7 +448,7 @@ export default function ReportsPage() {
             <StatCard title="Total Invoices" value={String(salesData.summary.totalInvoices)} icon={BarChart2} color="bg-purple-500" subtitle="Paid invoices" />
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
             <h2 className="text-base font-semibold text-gray-700 mb-4">Daily Revenue</h2>
             {salesData.dailySales.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-gray-400">
@@ -478,24 +478,24 @@ export default function ReportsPage() {
           </div>
 
           {salesData.dailySales.length > 0 && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-100">
                 <h2 className="text-base font-semibold text-gray-700">Daily Breakdown</h2>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="bg-gray-50">
-                      <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Date</th>
-                      <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Revenue</th>
-                      <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Tax</th>
-                      <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Invoices</th>
-                      <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Customers</th>
+                    <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
+                      <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Date</th>
+                      <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300">Revenue</th>
+                      <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300">Tax</th>
+                      <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300">Invoices</th>
+                      <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300">Customers</th>
                     </tr>
                   </thead>
                   <tbody>
                     {salesData.dailySales.map((d, i) => (
-                      <tr key={i} className="border-t border-gray-50 hover:bg-gray-50/50">
+                      <tr key={i} className="border-t border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 transition-colors">
                         <td className="px-5 py-3 text-gray-700">{format(new Date(d.date), 'dd MMM yyyy')}</td>
                         <td className="px-5 py-3 text-right font-medium text-gray-800">{formatINR(d.revenue)}</td>
                         <td className="px-5 py-3 text-right text-gray-500">{formatINR(d.taxCollected)}</td>
@@ -521,7 +521,7 @@ export default function ReportsPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
               <h2 className="text-base font-semibold text-gray-700 mb-4">Monthly Revenue vs Tax</h2>
               {profitData.monthlyProfit.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-gray-400">
@@ -545,7 +545,7 @@ export default function ReportsPage() {
               )}
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
               <h2 className="text-base font-semibold text-gray-700 mb-4">Top Customers</h2>
               {profitData.topCustomers.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-8 text-gray-400">
@@ -589,7 +589,7 @@ export default function ReportsPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
               <h2 className="text-base font-semibold text-gray-700 mb-4">Stock Level Distribution</h2>
               <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
@@ -612,7 +612,7 @@ export default function ReportsPage() {
               </ResponsiveContainer>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-base font-semibold text-gray-700">Low Stock Products</h2>
                 <button
@@ -647,7 +647,7 @@ export default function ReportsPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
               <h2 className="text-base font-semibold text-gray-700">Full Stock Report</h2>
               <span className="text-xs text-gray-400">{stockData.stockSummary.length} products</span>
@@ -655,20 +655,20 @@ export default function ReportsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-gray-50">
-                    <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Product</th>
-                    <th className="text-left px-5 py-3 text-xs font-medium text-gray-500">Code</th>
-                    <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Total In</th>
-                    <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Total Out</th>
-                    <th className="text-right px-5 py-3 text-xs font-medium text-gray-500">Current Stock</th>
-                    <th className="text-center px-5 py-3 text-xs font-medium text-gray-500">Status</th>
+                  <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Product</th>
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300">Code</th>
+                    <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300">Total In</th>
+                    <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300">Total Out</th>
+                    <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300">Current Stock</th>
+                    <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {stockData.stockSummary.map((s, i) => {
                     const status = s.currentStock === 0 ? 'out' : s.currentStock < stockData.lowStockThreshold ? 'low' : 'ok'
                     return (
-                      <tr key={i} className="border-t border-gray-50 hover:bg-gray-50/50">
+                      <tr key={i} className="border-t border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 transition-colors">
                         <td className="px-5 py-3 font-medium text-gray-800">{s.productName}</td>
                         <td className="px-5 py-3 text-gray-500">{s.productCode}</td>
                         <td className="px-5 py-3 text-right text-green-600">+{s.totalIn}</td>
@@ -705,7 +705,7 @@ export default function ReportsPage() {
             <StatCard title="Overdue" value={String(paymentData.summary.overdueCount)} icon={AlertTriangle} color="bg-red-500" subtitle="Past due date" />
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
               <h2 className="text-base font-semibold text-gray-700">Invoice Payment Details</h2>
               <span className="text-xs text-gray-400">{paymentData.payments.length} invoices</span>
@@ -713,20 +713,20 @@ export default function ReportsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-gray-50">
-                    <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Invoice #</th>
-                    <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Customer</th>
-                    <th className="text-right px-4 py-3 text-xs font-medium text-gray-500">Total</th>
-                    <th className="text-right px-4 py-3 text-xs font-medium text-gray-500">Paid</th>
-                    <th className="text-right px-4 py-3 text-xs font-medium text-gray-500">Pending</th>
-                    <th className="text-center px-4 py-3 text-xs font-medium text-gray-500">Status</th>
-                    <th className="text-center px-4 py-3 text-xs font-medium text-gray-500">Due Date</th>
-                    <th className="text-center px-4 py-3 text-xs font-medium text-gray-500">Paid On</th>
+                  <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-300">Invoice #</th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-slate-300">Customer</th>
+                    <th className="text-right px-4 py-3 text-xs font-semibold text-slate-300">Total</th>
+                    <th className="text-right px-4 py-3 text-xs font-semibold text-slate-300">Paid</th>
+                    <th className="text-right px-4 py-3 text-xs font-semibold text-slate-300">Pending</th>
+                    <th className="text-center px-4 py-3 text-xs font-semibold text-slate-300">Status</th>
+                    <th className="text-center px-4 py-3 text-xs font-semibold text-slate-300">Due Date</th>
+                    <th className="text-center px-4 py-3 text-xs font-semibold text-slate-300">Paid On</th>
                   </tr>
                 </thead>
                 <tbody>
                   {paymentData.payments.map((p, i) => (
-                    <tr key={i} className={`border-t border-gray-50 hover:bg-gray-50/50 ${p.isOverdue ? 'bg-red-50/30' : ''}`}>
+                    <tr key={i} className={`border-t border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 transition-colors ${p.isOverdue ? 'bg-red-50/30 dark:bg-red-900/10' : ''}`}>
                       <td className="px-4 py-3 font-medium text-blue-700">{p.invoiceNumber}</td>
                       <td className="px-4 py-3 text-gray-700">{p.customerName}</td>
                       <td className="px-4 py-3 text-right font-medium text-gray-800">{formatINR(p.grandTotal)}</td>
@@ -764,13 +764,13 @@ export default function ReportsPage() {
       {/* DYNAMIC REPORT TAB */}
       {activeTab === 'dynamic' && (
         <div className="space-y-6">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
             <h2 className="text-base font-semibold text-gray-700 mb-4">Report Builder</h2>
 
             {/* Module + Date selector */}
             <div className="flex flex-wrap items-end gap-4 mb-5">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Module</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Module</label>
                 <select
                   value={dynamicModule}
                   onChange={(e) => setDynamicModule(e.target.value)}
@@ -782,13 +782,13 @@ export default function ReportsPage() {
               </div>
               <div className="flex items-end gap-2">
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">From</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">From</label>
                   <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)}
                     className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">To</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">To</label>
                   <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)}
                     className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
@@ -839,7 +839,7 @@ export default function ReportsPage() {
 
           {/* Dynamic Results Table */}
           {dynamicData && dynamicHeaders.length > 0 && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
                 <h2 className="text-base font-semibold text-gray-700">Results</h2>
                 <span className="text-xs text-gray-400">{dynamicData.length} records</span>
@@ -847,7 +847,7 @@ export default function ReportsPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="bg-gray-50">
+                    <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
                       {dynamicHeaders.map((h) => {
                         const found = allDynamicFields.find((f) => f.key === h)
                         return (
@@ -860,7 +860,7 @@ export default function ReportsPage() {
                   </thead>
                   <tbody>
                     {dynamicData.map((record, i) => (
-                      <tr key={i} className="border-t border-gray-50 hover:bg-gray-50/50">
+                      <tr key={i} className="border-t border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 transition-colors">
                         {dynamicHeaders.map((h) => {
                           let val
                           if (h.startsWith('customFields.')) {

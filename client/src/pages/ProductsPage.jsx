@@ -170,18 +170,18 @@ export default function ProductsPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Products</h1>
-          <p className="text-gray-400 text-sm mt-0.5">{total} total products</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-50">Products</h1>
+          <p className="text-gray-500 dark:text-slate-400 text-sm mt-0.5">{total} total products</p>
         </div>
-        <button onClick={openAdd} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition shadow-sm">
+        <button onClick={openAdd} className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm shadow-blue-200 dark:shadow-blue-900/30">
           <Plus className="w-4 h-4" /> Add Product
         </button>
       </div>
 
       {showForm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-5 border-b sticky top-0 bg-white z-10">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-slate-700 sticky top-0 bg-white dark:bg-slate-800 z-10">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                   <Package size={16} className="text-blue-600" />
@@ -191,10 +191,10 @@ export default function ProductsPage() {
               <button onClick={() => setShowForm(false)} className="text-gray-400 hover:text-gray-600 p-1 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
             </div>
             {error && <div className="mx-5 mt-4 bg-red-50 border border-red-200 text-red-700 rounded-lg px-3 py-2 text-sm">{error}</div>}
-            <form onSubmit={handleSubmit} className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white dark:bg-slate-800">
               <div className="sm:col-span-2">
-                <label className="block text-xs font-medium text-gray-600 mb-1">Product Name *</label>
-                <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="e.g. Wireless Mouse" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Product Name *</label>
+                <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="e.g. Wireless Mouse" className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
               </div>
               <div>
                 <div className="flex items-center justify-between mb-1">
@@ -210,7 +210,7 @@ export default function ProductsPage() {
                     <button type="button" onClick={() => setAddingCategory(false)} className="border border-gray-200 px-2 py-2 rounded-lg text-xs"><X size={12} /></button>
                   </div>
                 ) : (
-                  <select required value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <select required value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400">
                     <option value="">Select category</option>
                     {categories.map((c) => <option key={c} value={c}>{c}</option>)}
                   </select>
@@ -230,22 +230,22 @@ export default function ProductsPage() {
                     <button type="button" onClick={() => setAddingUnit(false)} className="border border-gray-200 px-2 py-2 rounded-lg text-xs"><X size={12} /></button>
                   </div>
                 ) : (
-                  <select value={form.unit} onChange={(e) => setForm({ ...form, unit: e.target.value })} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <select value={form.unit} onChange={(e) => setForm({ ...form, unit: e.target.value })} className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400">
                     {units.map((u) => <option key={u} value={u}>{u}</option>)}
                   </select>
                 )}
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Base Price (&#8377;)</label>
-                <input type="number" min="0" step="0.01" value={form.basePrice} onChange={(e) => setForm({ ...form, basePrice: e.target.value })} placeholder="0.00" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Base Price (&#8377;)</label>
+                <input type="number" min="0" step="0.01" value={form.basePrice} onChange={(e) => setForm({ ...form, basePrice: e.target.value })} placeholder="0.00" className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Tax Rate (%)</label>
-                <input type="number" min="0" max="100" value={form.taxRate} onChange={(e) => setForm({ ...form, taxRate: e.target.value })} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Tax Rate (%)</label>
+                <input type="number" min="0" max="100" value={form.taxRate} onChange={(e) => setForm({ ...form, taxRate: e.target.value })} className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-xs font-medium text-gray-600 mb-1">Description</label>
-                <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Brief product description" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Description</label>
+                <input value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Brief product description" className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
               </div>
               <div className="sm:col-span-2 flex items-center gap-2">
                 <input id="reqApproval" type="checkbox" checked={form.requiresApproval} onChange={(e) => setForm({ ...form, requiresApproval: e.target.checked })} className="rounded border-gray-300 text-blue-600" />
@@ -254,17 +254,17 @@ export default function ProductsPage() {
               {customFieldDefs.length > 0 && (
                 <>
                   <div className="sm:col-span-2 border-t border-gray-100 pt-3">
-                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Additional Fields</p>
+                    <p className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-3">Additional Fields</p>
                   </div>
                   {customFieldDefs.map((field) => (
                     <div key={field.fieldKey}>
-                      <label className="block text-xs font-medium text-gray-600 mb-1">{field.fieldLabel}{field.required && ' *'}</label>
+                      <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">{field.fieldLabel}{field.required && ' *'}</label>
                       {field.fieldType === 'select' ? (
                         <select
                           required={field.required}
                           value={String(form.customFields[field.fieldKey] || '')}
                           onChange={(e) => setCustomField(field.fieldKey, e.target.value)}
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                         >
                           <option value="">Select...</option>
                           {field.options?.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
@@ -273,7 +273,7 @@ export default function ProductsPage() {
                         <select
                           value={String(form.customFields[field.fieldKey] ?? '')}
                           onChange={(e) => setCustomField(field.fieldKey, e.target.value === 'true')}
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                         >
                           <option value="">Select...</option>
                           <option value="true">Yes</option>
@@ -285,7 +285,7 @@ export default function ProductsPage() {
                           required={field.required}
                           value={String(form.customFields[field.fieldKey] || '')}
                           onChange={(e) => setCustomField(field.fieldKey, field.fieldType === 'number' ? Number(e.target.value) : e.target.value)}
-                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                         />
                       )}
                     </div>
@@ -307,11 +307,11 @@ export default function ProductsPage() {
         <div className="relative max-w-xs">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); fetchProducts(e.target.value, 1) }}
-            placeholder="Search products..." className="pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            placeholder="Search products..." className="pl-9 pr-4 py-2 border border-gray-200 dark:border-slate-600 rounded-lg text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700">
         {loading ? (
           <div className="p-6 space-y-3">
             {[...Array(5)].map((_, i) => <div key={i} className="h-10 bg-gray-100 rounded animate-pulse" />)}
@@ -327,21 +327,21 @@ export default function ProductsPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-100 bg-gray-50">
+                  <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
                     {['Code', 'Name', 'Category', 'Unit', 'Base Price', 'Tax', 'Status', 'Actions'].map((h) => (
-                      <th key={h} className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{h}</th>
+                      <th key={h} className="text-left py-3 px-4 text-xs font-semibold text-slate-300 uppercase tracking-wider">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {products.map((p) => (
-                    <tr key={p._id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                      <td className="py-3 px-4 text-xs text-gray-500 font-mono">{p.code}</td>
-                      <td className="py-3 px-4 text-sm font-medium text-gray-800">{p.name}</td>
-                      <td className="py-3 px-4 text-sm text-gray-600">{p.category}</td>
-                      <td className="py-3 px-4 text-sm text-gray-600">{p.unit}</td>
-                      <td className="py-3 px-4 text-sm text-gray-700 font-medium">&#8377;{p.basePrice.toLocaleString('en-IN')}</td>
-                      <td className="py-3 px-4 text-sm text-gray-600">{p.taxRate}%</td>
+                    <tr key={p._id} className="border-b border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 transition-colors">
+                      <td className="py-3 px-4 text-xs text-gray-500 dark:text-slate-400 font-mono">{p.code}</td>
+                      <td className="py-3 px-4 text-sm font-medium text-gray-800 dark:text-slate-100">{p.name}</td>
+                      <td className="py-3 px-4 text-sm text-gray-600 dark:text-slate-300">{p.category}</td>
+                      <td className="py-3 px-4 text-sm text-gray-600 dark:text-slate-300">{p.unit}</td>
+                      <td className="py-3 px-4 text-sm text-gray-700 dark:text-slate-200 font-medium">&#8377;{p.basePrice.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-sm text-gray-600 dark:text-slate-300">{p.taxRate}%</td>
                       <td className="py-3 px-4">
                         <span className={`text-xs font-medium px-2 py-0.5 rounded-full capitalize ${STATUS_STYLES[p.status] || ''}`}>{p.status}</span>
                       </td>

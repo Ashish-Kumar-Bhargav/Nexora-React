@@ -28,7 +28,7 @@ function ImageUpload({ label, value, onChange }) {
 
   return (
     <div>
-      <label className="block text-xs font-medium text-gray-600 mb-1">{label}</label>
+      <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">{label}</label>
       <div className="flex items-center gap-2">
         <button
           type="button"
@@ -223,7 +223,7 @@ export default function CompaniesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Companies</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-slate-100">Companies</h1>
           <p className="text-sm text-gray-400 mt-0.5">{total} total companies</p>
         </div>
         <button
@@ -242,7 +242,7 @@ export default function CompaniesPage() {
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Search name or code..."
-            className="pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="pl-9 pr-4 py-2 border border-gray-200 dark:border-slate-600 rounded-lg text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
           />
         </div>
         <select
@@ -257,7 +257,7 @@ export default function CompaniesPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700">
         {loading ? (
           <div className="p-6 space-y-3">
             {[...Array(5)].map((_, i) => <div key={i} className="h-12 bg-gray-100 rounded animate-pulse" />)}
@@ -273,15 +273,15 @@ export default function CompaniesPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-100 bg-gray-50">
+                  <tr className="bg-gradient-to-r from-slate-700 to-slate-800">
                     {['Company', 'Code', 'GST Number', 'Contact', 'Logo', 'Status', 'Actions'].map((h) => (
-                      <th key={h} className="text-left py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">{h}</th>
+                      <th key={h} className="text-left py-3 px-4 text-xs font-semibold text-slate-300 uppercase tracking-wider">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {companies.map((c) => (
-                    <tr key={c._id} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
+                    <tr key={c._id} className="border-b border-gray-100 dark:border-slate-700 hover:bg-blue-50/30 dark:hover:bg-slate-700/40 transition-colors">
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-3">
                           {c.logo ? (
@@ -504,8 +504,8 @@ export default function CompaniesPage() {
       {/* Create / Edit Modal */}
       {showForm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-5 border-b sticky top-0 bg-white z-10">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-5 border-b border-gray-100 dark:border-slate-700 sticky top-0 bg-white dark:bg-slate-800 z-10">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                   <Building2 size={16} className="text-blue-600" />
@@ -523,21 +523,21 @@ export default function CompaniesPage() {
               <div className="mx-5 mt-4 bg-red-50 border border-red-200 text-red-700 rounded-lg px-3 py-2 text-sm">{error}</div>
             )}
 
-            <form onSubmit={handleSubmit} className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white dark:bg-slate-800">
               <div className="sm:col-span-2">
-                <label className="block text-xs font-medium text-gray-600 mb-1">Company Name *</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Company Name *</label>
                 <input
                   required
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="e.g. Nexora Tech Pvt Ltd"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
               </div>
 
               {!editing && (
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Company Code *</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Company Code *</label>
                   <input
                     required
                     value={form.code}
@@ -550,38 +550,38 @@ export default function CompaniesPage() {
               )}
 
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">GST Number</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">GST Number</label>
                 <input
                   value={form.gstNumber}
                   onChange={(e) => setForm({ ...form, gstNumber: e.target.value })}
                   placeholder="e.g. 29AAACN1234A1Z5"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Phone</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Phone</label>
                 <input
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   placeholder="+91-80-4123-4567"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Email</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Email</label>
                 <input
                   type="email"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   placeholder="info@company.com"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-medium text-gray-600 mb-1">Address</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Address</label>
                 <textarea
                   value={form.address}
                   onChange={(e) => setForm({ ...form, address: e.target.value })}

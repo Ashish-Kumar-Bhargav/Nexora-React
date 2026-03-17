@@ -335,12 +335,12 @@ export default function UsersPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Users</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-50">Users</h1>
           <p className="text-sm text-gray-500 mt-0.5">Manage user accounts and company access</p>
         </div>
         <button
           onClick={() => { setEditId(null); setForm(emptyForm); setShowForm(true); setError('') }}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition shadow-sm"
+          className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all shadow-sm shadow-blue-200 dark:shadow-blue-900/30"
         >
           <Plus className="w-4 h-4" />
           Add User
@@ -364,32 +364,32 @@ export default function UsersPage() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Name *</label>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Name *</label>
                     <input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                      className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Email *</label>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Email *</label>
                     <input required type="email" disabled={!!editId} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
                       className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50" />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Phone</label>
+                    <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Phone</label>
                     <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                      className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">
+                    <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">
                       {editId ? 'New Password (optional)' : 'Password *'}
                     </label>
                     <input required={!editId} type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })}
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                      className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400" />
                   </div>
                   {!editId && (
                     <div className="sm:col-span-2">
-                      <label className="block text-xs font-medium text-gray-600 mb-1">Global Role</label>
+                      <label className="block text-xs font-medium text-gray-600 dark:text-slate-300 mb-1">Global Role</label>
                       <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}
-                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        className="w-full border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400">
                         <option value="user">User</option>
                         <option value="manager">Manager</option>
                         <option value="admin">Admin</option>
@@ -678,13 +678,13 @@ export default function UsersPage() {
             value={search}
             onChange={(e) => { setSearch(e.target.value); fetchUsers(e.target.value) }}
             placeholder="Search users..."
-            className="pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="pl-9 pr-4 py-2 border border-gray-200 dark:border-slate-600 rounded-lg text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 placeholder-gray-400 dark:placeholder-slate-400"
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm">
-        <DataTable columns={columns} data={users} loading={loading} />
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700">
+        <DataTable columns={columns} data={users} loading={loading} seamless />
       </div>
     </div>
   )
